@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: targer-backend
+spec:
+  type: NodePort
+  selector:
+    service: backend
+  ports:
+    - port: 10600
+      targetPort: 6000
+      nodePort: 30000
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: backend
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: backend
+  template:
+    metadata:
+      labels:
+        service: backend
+    spec:
+      containers:
+        - image: "targer_kubernetes_backend"
+          name: backend
+          ports:
+            - containerPort: 6000
+      restartPolicy: Always
