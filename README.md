@@ -47,9 +47,9 @@ For detailed documentation about the tagging library refer to [its repository](h
 ## Quick run web application with docker
 
 1. Download all the [pre-trained model files](http://ltdata1.informatik.uni-hamburg.de/targer/)
-to the `backend/models` directory:
+to the `models` directory:
 ```shell script
-cd backend
+cd models
 wget http://ltdata1.informatik.uni-hamburg.de/targer/COMBO.h5
 wget http://ltdata1.informatik.uni-hamburg.de/targer/ES.h5
 wget http://ltdata1.informatik.uni-hamburg.de/targer/ES_dep.h5
