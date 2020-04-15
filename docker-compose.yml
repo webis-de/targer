@@ -13,7 +13,7 @@ services:
     networks:
       - arg
     volumes:
-      - ./backend/models/:/emnlp2017-bilstm-cnn-crf/models/
+      - ./models/:/emnlp2017-bilstm-cnn-crf/models/
 
 networks:
   arg:

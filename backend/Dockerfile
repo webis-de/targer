@@ -10,10 +10,7 @@ ADD requirements.txt /
 RUN pip install -r requirements.txt
 
 # Add Python scripts
-ADD backend.py /emnlp2017-bilstm-cnn-crf/
-ADD Model.py /emnlp2017-bilstm-cnn-crf/
-ADD ModelNewES.py /emnlp2017-bilstm-cnn-crf/
-ADD ModelNewWD.py /emnlp2017-bilstm-cnn-crf/
+ADD backend.py Model.py ModelNewES.py ModelNewWD.py /emnlp2017-bilstm-cnn-crf/
 ADD BiLSTM.py /emnlp2017-bilstm-cnn-crf/neuralnets/
 
 VOLUME /emnlp2017-bilstm-cnn-crf/models/
@@ -25,12 +22,3 @@ WORKDIR /emnlp2017-bilstm-cnn-crf
 
 # Run app.py when the container launches
 CMD ["python3", "backend.py"]
-
-
-
-
-
-
-
-
-
