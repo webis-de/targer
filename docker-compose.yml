@@ -3,13 +3,13 @@ services:
   frontend:
     build: ./frontend/
     ports:
-      - 10601:6001
+      - 6001:6001
     networks:
       - arg
   backend:
     build: ./backend/
     ports:
-      - 10600:6000
+      - 6000:6000
     networks:
       - arg
     volumes:
