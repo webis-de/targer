@@ -2,27 +2,21 @@
 FROM python:3.5
 
 # Clone third-party repos.
-RUN git clone https://github.com/UKPLab/emnlp2017-bilstm-cnn-crf.git /emnlp2017-bilstm-cnn-crf
-RUN git clone https://github.com/achernodub/bilstm-cnn-crf-tagger.git /emnlp2017-bilstm-cnn-crf/lstm
-
-# Set the working directory to file system root.
-WORKDIR /
+RUN git clone --branch "2.2.0" --depth 1 https://github.com/UKPLab/emnlp2017-bilstm-cnn-crf.git /emnlp2017-bilstm-cnn-crf
+RUN git clone --branch "v1.0.1" --depth 1 https://github.com/achernodub/targer.git /emnlp2017-bilstm-cnn-crf/lstm
 
 # Install any needed packages specified in requirements.txt
 ADD requirements.txt /
 RUN pip install -r requirements.txt
 
-# Add all Data
-ADD . /
+# Add Python scripts
+ADD backend.py /emnlp2017-bilstm-cnn-crf/
+ADD Model.py /emnlp2017-bilstm-cnn-crf/
+ADD ModelNewES.py /emnlp2017-bilstm-cnn-crf/
+ADD ModelNewWD.py /emnlp2017-bilstm-cnn-crf/
+ADD BiLSTM.py /emnlp2017-bilstm-cnn-crf/neuralnets/
 
-RUN mv backend.py /emnlp2017-bilstm-cnn-crf/ \
-  && mv Model.py /emnlp2017-bilstm-cnn-crf/ \
-  && mv ModelNewES.py /emnlp2017-bilstm-cnn-crf/ \
-  && mv ModelNewWD.py /emnlp2017-bilstm-cnn-crf/
-
-RUN mv models/* /emnlp2017-bilstm-cnn-crf/models/
-
-RUN mv -f BiLSTM.py /emnlp2017-bilstm-cnn-crf/neuralnets/
+VOLUME /emnlp2017-bilstm-cnn-crf/models/
 
 # Make port 6000 available to the world outside this container
 EXPOSE 6000

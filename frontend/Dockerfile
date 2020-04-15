@@ -22,7 +22,7 @@ ENV STATIC_PATH /static
 EXPOSE 6001
 
 # Run app.py when the container launches
-#CMD ["python3", "frontend.py"]
+CMD ["python3", "frontend.py"]
 
 
 
