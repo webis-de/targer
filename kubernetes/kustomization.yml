@@ -1,7 +1,0 @@
-commonLabels:
-  app: targer
-resources:
-  - "https://download.elastic.co/downloads/eck/1.0.1/all-in-one.yaml"
-  - elasticsearch.yml
-  - frontend.yml
-  - backend.yml

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Chart.Name }}-backend
+  name: {{ .Chart.Name }}-backend
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-backend
+  replicas: {{ .Values.backend.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-backend
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-backend
+        image: {{ .Values.backend.image }}
+        volumeMounts:
+        - mountPath: /targer-models
+          name: {{ .Chart.Name }}-models
+          readOnly: true
+        - mountPath: /targer-index
+          name: {{ .Chart.Name }}-index
+          readOnly: true
+      restartPolicy: Always
+      volumes:
+      - name: {{ .Chart.Name }}-models
+        hostPath:
+          path: /mnt/ceph/storage/data-in-progress/targer/models
+          type: Directory
+      - name: {{ .Chart.Name }}-index
+        hostPath:
+          path: /mnt/ceph/storage/data-in-progress/targer/index
+          type: Directory

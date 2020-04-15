@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Chart.Name }}-index
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  accessModes:
+  - ReadOnlyMany
+  hostPath:
+    path: {{ .Values.indexPath }}
+    type: Directory
