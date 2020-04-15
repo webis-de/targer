@@ -12,7 +12,10 @@ services:
       - 10600:6000
     networks:
       - arg
+    volumes:
+      - ./backend/models/:/emnlp2017-bilstm-cnn-crf/models/
 
 networks:
   arg:
+
 
