@@ -11,8 +11,8 @@ RUN pip install -r /requirements.txt && \
   python -m pip install "msgpack<0.6.0"
 
 # Add static files
-ADD static /
-ADD templates /
+ADD static /static
+ADD templates /templates
 
 # Add configuration
 ADD config.ini uwsgi.ini /
