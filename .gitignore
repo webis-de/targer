@@ -100,14 +100,6 @@ ENV/
 # mypy
 .mypy_cache/
 
-backend/models/ES.h5
-backend/models/ES_dep.h5
-backend/models/WD.h5
-backend/models/WD_dep.h5
-backend/models/COMBO.h5
-backend/models/IBM.h5
-backend/models/model_new_es.hdf5
-backend/models/model_new_wd.hdf5
 
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
@@ -181,3 +173,6 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+
+models
+!models/README.md
