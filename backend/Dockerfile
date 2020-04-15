@@ -2,8 +2,9 @@
 FROM python:3.5
 
 # Clone third-party repos.
-RUN git clone --branch "2.2.0" --depth 1 https://github.com/UKPLab/emnlp2017-bilstm-cnn-crf.git /emnlp2017-bilstm-cnn-crf
-RUN git clone --branch "v1.0.1" --depth 1 https://github.com/achernodub/targer.git /emnlp2017-bilstm-cnn-crf/lstm
+# TODO: Which tags should we clone? Cloning from master could break build at any time.
+RUN git clone --depth 1 https://github.com/UKPLab/emnlp2017-bilstm-cnn-crf.git /emnlp2017-bilstm-cnn-crf
+RUN git clone --depth 1 https://github.com/achernodub/targer.git /emnlp2017-bilstm-cnn-crf/lstm
 
 # Install any needed packages specified in requirements.txt
 ADD requirements.txt /
