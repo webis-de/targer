@@ -46,18 +46,18 @@ For detailed documentation about the tagging library refer to [its repository](h
 
 ## Quick run web application with docker
 
-1. Download all the [pre-trained model files](http://ltdata1.informatik.uni-hamburg.de/targer/)
+1. Download all the [pre-trained model files](https://files.webis.de/data-in-production/targer/models/)
 to the `models` directory:
 ```shell script
 cd models
-wget http://ltdata1.informatik.uni-hamburg.de/targer/COMBO.h5
-wget http://ltdata1.informatik.uni-hamburg.de/targer/ES.h5
-wget http://ltdata1.informatik.uni-hamburg.de/targer/ES_dep.h5
-wget http://ltdata1.informatik.uni-hamburg.de/targer/IBM.h5
-wget http://ltdata1.informatik.uni-hamburg.de/targer/WD.h5
-wget http://ltdata1.informatik.uni-hamburg.de/targer/WD_dep.h5
-wget http://ltdata1.informatik.uni-hamburg.de/targer/model_new_es.hdf5
-wget http://ltdata1.informatik.uni-hamburg.de/targer/model_new_wd.hdf5
+wget https://files.webis.de/data-in-production/targer/models/COMBO.h5
+wget https://files.webis.de/data-in-production/targer/models/ES.h5
+wget https://files.webis.de/data-in-production/targer/models/ES_dep.h5
+wget https://files.webis.de/data-in-production/targer/models/IBM.h5
+wget https://files.webis.de/data-in-production/targer/models/WD.h5
+wget https://files.webis.de/data-in-production/targer/models/WD_dep.h5
+wget https://files.webis.de/data-in-production/targer/models/model_new_es.hdf5
+wget https://files.webis.de/data-in-production/targer/models/model_new_wd.hdf5
 ```
 2. Run the demo using Docker: 
 `docker-compose up`
