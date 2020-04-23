@@ -8,7 +8,7 @@ RUN git clone --depth 1 https://github.com/achernodub/targer.git /emnlp2017-bils
 
 # Install any needed packages specified in requirements.txt
 ADD requirements.txt /
-RUN pip install -r requirements.txt
+RUN pip install -r /emnlp2017-bilstm-cnn-crf/requirements.txt -r /requirements.txt
 
 # Add Python scripts
 ADD backend.py Model.py ModelNewES.py ModelNewWD.py /emnlp2017-bilstm-cnn-crf/
