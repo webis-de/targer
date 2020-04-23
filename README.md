@@ -1,3 +1,9 @@
+[![GitHub Actions](https://img.shields.io/github/workflow/status/heinrichreimer/targer/Docker%20build?style=flat-square)](https://github.com/heinrichreimer/targer/actions?query=workflow%3A%22Docker+build%22)
+[![](https://img.shields.io/docker/v/heinrichreimer/targer-frontend?style=flat-square&label=frontend+version)](https://hub.docker.com/repository/docker/heinrichreimer/targer-frontend/tags)
+[![](https://img.shields.io/docker/pulls/heinrichreimer/targer-frontend?style=flat-square&label=frontend+pulls)](https://hub.docker.com/repository/docker/heinrichreimer/targer-frontend)
+[![](https://img.shields.io/docker/v/heinrichreimer/targer-backend?style=flat-square&label=backend+version)](https://hub.docker.com/repository/docker/heinrichreimer/targer-backend/tags)
+[![](https://img.shields.io/docker/pulls/heinrichreimer/targer-backend?style=flat-square&label=backend+pulls)](https://hub.docker.com/repository/docker/heinrichreimer/targer-backend)
+
 # TARGER: Neural Argument Mining at Your Fingertips
 
 This page contains code of the Web application and web service 
