@@ -1,4 +1,4 @@
-name: "Build Docker image"
+name: "Docker build"
 
 on: push
 

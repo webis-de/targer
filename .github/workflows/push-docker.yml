@@ -1,4 +1,4 @@
-name: Deploy
+name: "Docker push"
 
 on:
   push:
@@ -23,9 +23,10 @@ jobs:
         registry: docker.pkg.github.com
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        repository: docker.pkg.github.com/${{ github.repository }}
+        repository: ${{ github.repository }}
         tag_with_ref: true
         path: frontend
+        labels: org.opencontainers.image.url=https://github.com/${{ github.repository }},org.opencontainers.image.documentation=https://github.com/${{ github.repository }},org.opencontainers.image.title=TARGER,org.opencontainers.image.description=Neural Argument Mining at Your Fingertips
         add_git_labels: true
   push-backend:
     name: "🚀 Push backend image"
@@ -39,7 +40,8 @@ jobs:
         registry: docker.pkg.github.com
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        repository: docker.pkg.github.com/${{ github.repository }}
+        repository: ${{ github.repository }}
         tag_with_ref: true
         path: backend
+        labels: org.opencontainers.image.url=https://github.com/${{ github.repository }},org.opencontainers.image.documentation=https://github.com/${{ github.repository }},org.opencontainers.image.title=TARGER,org.opencontainers.image.description=Neural Argument Mining at Your Fingertips
         add_git_labels: true
