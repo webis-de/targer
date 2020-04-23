@@ -17,7 +17,7 @@ jobs:
     steps:
     - name: "📥 Check-out"
       uses: actions/checkout@v2
-    - name: "🚀 Build & push Docker image"
+    - name: "🚀 Build & push to GitHub Packages"
       uses: docker/build-push-action@v1
       with:
         registry: docker.pkg.github.com
@@ -28,19 +28,39 @@ jobs:
         path: frontend
         labels: org.opencontainers.image.url=https://github.com/${{ github.repository }},org.opencontainers.image.documentation=https://github.com/${{ github.repository }},org.opencontainers.image.title=TARGER,org.opencontainers.image.description=Neural Argument Mining at Your Fingertips
         add_git_labels: true
+    - name: "🚀 Build & push to Docker Hub"
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        repository: ${{ secrets.DOCKER_USERNAME }}/targer-frontend
+        tag_with_ref: true
+        path: frontend
+        labels: org.opencontainers.image.url=https://github.com/${{ github.repository }},org.opencontainers.image.documentation=https://github.com/${{ github.repository }},org.opencontainers.image.title=TARGER,org.opencontainers.image.description=Neural Argument Mining at Your Fingertips
+        add_git_labels: true
   push-backend:
     name: "🚀 Push backend image"
     runs-on: ubuntu-18.04
     steps:
     - name: "📥 Check-out"
       uses: actions/checkout@v2
-    - name: "🚀 Build & push Docker image"
+    - name: "🚀 Build & push to GitHub Packages"
       uses: docker/build-push-action@v1
       with:
         registry: docker.pkg.github.com
         username: ${{ github.actor }}
         password: ${{ github.token }}
         repository: ${{ github.repository }}/backend
+        tag_with_ref: true
+        path: backend
+        labels: org.opencontainers.image.url=https://github.com/${{ github.repository }},org.opencontainers.image.documentation=https://github.com/${{ github.repository }},org.opencontainers.image.title=TARGER,org.opencontainers.image.description=Neural Argument Mining at Your Fingertips
+        add_git_labels: true
+    - name: "🚀 Build & push to Docker Hub"
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        repository: ${{ secrets.DOCKER_USERNAME }}/targer-backend
         tag_with_ref: true
         path: backend
         labels: org.opencontainers.image.url=https://github.com/${{ github.repository }},org.opencontainers.image.documentation=https://github.com/${{ github.repository }},org.opencontainers.image.title=TARGER,org.opencontainers.image.description=Neural Argument Mining at Your Fingertips
