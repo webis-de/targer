@@ -22,7 +22,7 @@ jobs:
       with:
         registry: docker.pkg.github.com
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ github.token }}
         repository: ${{ github.repository }}
         tag_with_ref: true
         path: frontend
@@ -39,7 +39,7 @@ jobs:
       with:
         registry: docker.pkg.github.com
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ github.token }}
         repository: ${{ github.repository }}
         tag_with_ref: true
         path: backend
