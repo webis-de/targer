@@ -1,8 +1,8 @@
-[![GitHub Actions](https://img.shields.io/github/workflow/status/heinrichreimer/targer/Docker%20build?style=flat-square)](https://github.com/heinrichreimer/targer/actions?query=workflow%3A%22Docker+build%22)
-[![Docker Hub frontend tags](https://img.shields.io/docker/v/heinrichreimer/targer-frontend?style=flat-square&label=frontend+version)](https://hub.docker.com/repository/docker/heinrichreimer/targer-frontend/tags)
-[![Docker Hub frontend](https://img.shields.io/docker/pulls/heinrichreimer/targer-frontend?style=flat-square&label=frontend+pulls)](https://hub.docker.com/repository/docker/heinrichreimer/targer-frontend)
-[![Docker Hub backend tags](https://img.shields.io/docker/v/heinrichreimer/targer-backend?style=flat-square&label=backend+version)](https://hub.docker.com/repository/docker/heinrichreimer/targer-backend/tags)
-[![Docker Hub backend](https://img.shields.io/docker/pulls/heinrichreimer/targer-backend?style=flat-square&label=backend+pulls)](https://hub.docker.com/repository/docker/heinrichreimer/targer-backend)
+[![GitHub Actions](https://img.shields.io/github/workflow/status/webis-de/targer/Docker%20build?style=flat-square)](https://github.com/webis-de/targer/actions?query=workflow%3A%22Docker+build%22)
+[![Docker Hub frontend tags](https://img.shields.io/docker/v/webis/targer-frontend?style=flat-square&label=frontend+version)](https://hub.docker.com/repository/docker/webis/targer-frontend/tags)
+[![Docker Hub frontend](https://img.shields.io/docker/pulls/webis/targer-frontend?style=flat-square&label=frontend+pulls)](https://hub.docker.com/repository/docker/webis/targer-frontend)
+[![Docker Hub backend tags](https://img.shields.io/docker/v/webis/targer-backend?style=flat-square&label=backend+version)](https://hub.docker.com/repository/docker/webis/targer-backend/tags)
+[![Docker Hub backend](https://img.shields.io/docker/pulls/webis/targer-backend?style=flat-square&label=backend+pulls)](https://hub.docker.com/repository/docker/webis/targer-backend)
 
 # TARGER: Neural Argument Mining at Your Fingertips
 
