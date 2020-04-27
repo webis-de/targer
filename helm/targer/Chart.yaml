@@ -1,0 +1,18 @@
+apiVersion: v2
+name: targer
+description: "TARGER: Neural Argument Mining at Your Fingertips"
+type: application
+home: https://github.com/heinrichreimer/targer
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application.
+appVersion: 1.16.0
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+version: 0.1.0
+
+dependencies:
+  - name: elastic-stack
+    version: 1.9.0
+    repository: https://kubernetes-charts.storage.googleapis.com/
