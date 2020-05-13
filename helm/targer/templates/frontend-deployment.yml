@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: {{ .Chart.Name }}-frontend
-  replicas: {{ .Values.frontend.replicaCount }}
+  replicas: {{ .Values.frontend.replicas }}
   template:
     metadata:
       labels:
@@ -17,4 +17,12 @@ spec:
       containers:
       - name: {{ .Chart.Name }}-frontend
         image: {{ .Values.frontend.image }}
+        volumeMounts:
+        - name: {{ .Chart.Name }}-frontend-config
+          mountPath: /config.ini
+          subPath: config.ini
       restartPolicy: Always
+      volumes:
+      - name: {{ .Chart.Name }}-frontend-config
+        configMap:
+          name: {{ .Chart.Name }}-frontend-config-map

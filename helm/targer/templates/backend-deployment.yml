@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: {{ .Chart.Name }}-backend
-  replicas: {{ .Values.backend.replicaCount }}
+  replicas: {{ .Values.backend.replicas }}
   template:
     metadata:
       labels:
@@ -17,13 +17,16 @@ spec:
       containers:
       - name: {{ .Chart.Name }}-backend
         image: {{ .Values.backend.image }}
+        resources:
+          requests:
+            memory: 15Gi
         volumeMounts:
         - mountPath: /emnlp2017-bilstm-cnn-crf/models/
-          name: {{ .Chart.Name }}-models
+          name: {{ .Chart.Name }}-backend-models
           readOnly: true
       restartPolicy: Always
       volumes:
-      - name: {{ .Chart.Name }}-models
+      - name: {{ .Chart.Name }}-backend-models
         hostPath:
-          path: {{ .Values.modelsPath }}
+          path: {{ .Values.backend.modelsPath }}
           type: Directory

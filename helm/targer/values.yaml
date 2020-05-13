@@ -3,22 +3,33 @@
 # Declare variables to be passed into your templates.
 
 frontend:
+  url: http://betaweb128.medien.uni-weimar.de:30294/
   port: 30294
   image: webis/targer-frontend:latest
-  replicaCount: 3
+  replicas: 1
 
 backend:
+  url: http://betaweb128.medien.uni-weimar.de:30293/
   port: 30293
   image: webis/targer-backend:latest
-  replicaCount: 3
+  replicas: 1
+  # Paths of models and index snapshot on each host's file system.
+  modelsPath: /mnt/ceph/storage/data-in-progress/targer/models/
 
 # Paths of models and index snapshot on each host's file system.
-modelsPath: /mnt/ceph/storage/data-in-progress/targer/models/
-indexPath: /mnt/ceph/storage/data-in-progress/targer/index/
+#indexPath: /mnt/ceph/storage/data-in-progress/targer/index/
 
 # Elasticsearch configuration
 elasticsearch:
+  clusterName: targer-es
+  replicas: 5
+  volumeClaimTemplate:
+    resources:
+      requests:
+        storage: 2Ti
   esConfig:
     elasticsearch.yml: |
-      path.repo: ["/targer-index"]
       repositories.url.allowed_urls: ["https://ltdata1.informatik.uni-hamburg.de/targer/*", "https://files.webis.de/data-in-production/targer/*"]
+
+kibana:
+  elasticsearchHosts: "http://targer-es-master:9200"
