@@ -18,19 +18,12 @@ spec:
       - name: {{ .Chart.Name }}-backend
         image: {{ .Values.backend.image }}
         volumeMounts:
-        - mountPath: /targer-models
+        - mountPath: /emnlp2017-bilstm-cnn-crf/models/
           name: {{ .Chart.Name }}-models
-          readOnly: true
-        - mountPath: /targer-index
-          name: {{ .Chart.Name }}-index
           readOnly: true
       restartPolicy: Always
       volumes:
       - name: {{ .Chart.Name }}-models
         hostPath:
-          path: /mnt/ceph/storage/data-in-progress/targer/models
-          type: Directory
-      - name: {{ .Chart.Name }}-index
-        hostPath:
-          path: /mnt/ceph/storage/data-in-progress/targer/index
+          path: {{ .Values.modelsPath }}
           type: Directory
