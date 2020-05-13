@@ -16,9 +16,6 @@ backend:
   # Paths of models and index snapshot on each host's file system.
   modelsPath: /mnt/ceph/storage/data-in-progress/targer/models/
 
-# Paths of models and index snapshot on each host's file system.
-#indexPath: /mnt/ceph/storage/data-in-progress/targer/index/
-
 # Elasticsearch configuration
 elasticsearch:
   clusterName: targer-es
@@ -29,7 +26,17 @@ elasticsearch:
         storage: 2Ti
   esConfig:
     elasticsearch.yml: |
-      repositories.url.allowed_urls: ["https://ltdata1.informatik.uni-hamburg.de/targer/*", "https://files.webis.de/data-in-production/targer/*"]
+      path.repo:
+      - /targer/snapshot/
+  extraVolumes: |
+    - name: targer-es-snapshot
+      hostPath:
+        path: /mnt/ceph/storage/data-in-progress/targer/index/
+        type: Directory
+  extraVolumeMounts: |
+    - mountPath: /targer/snapshot/
+      name: targer-es-snapshot
+      readOnly: true
 
 kibana:
   elasticsearchHosts: "http://targer-es-master:9200"
