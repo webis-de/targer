@@ -9,4 +9,4 @@ spec:
   ports:
   - nodePort: {{ .Values.backend.port }}
     port: 6000
-    targetPort: {{ .Chart.Name }}-backend-port
+    targetPort: 6000

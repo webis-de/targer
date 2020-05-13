@@ -1,6 +1,9 @@
 dependencies:
-- name: elastic-stack
-  repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 1.9.0
-digest: sha256:7cc63958933aeb8e16dbf89df88538d56f4e71df6a5404ff1875dfdd237662ac
-generated: "2020-03-26T13:44:19.4833775+01:00"
+- name: elasticsearch
+  repository: https://helm.elastic.co/
+  version: 7.1.0
+- name: kibana
+  repository: https://helm.elastic.co
+  version: 7.1.0
+digest: sha256:23d435d0ad2e4b93fde18e22b90692e547d1b44e58c2c7edb969c99ac4d0a29e
+generated: "2020-05-13T12:06:04.765834+02:00"

@@ -4,21 +4,21 @@
 
 frontend:
   port: 30294
-  image: heinrichreimer/targer-frontend:latest
-  replicaCount: 1
+  image: webis/targer-frontend:latest
+  replicaCount: 3
 
 backend:
   port: 30293
-  image: heinrichreimer/targer-backend:latest
-  replicaCount: 1
+  image: webis/targer-backend:latest
+  replicaCount: 3
 
-modelsPath: /mnt/ceph/storage/data-in-progress/targer/models
-indexPath: /mnt/ceph/storage/data-in-progress/targer/index
+# Paths of models and index snapshot on each host's file system.
+modelsPath: /mnt/ceph/storage/data-in-progress/targer/models/
+indexPath: /mnt/ceph/storage/data-in-progress/targer/index/
 
-# Elastic stack configuration
+# Elasticsearch configuration
 elasticsearch:
-  enabled: true
-kibana:
-  enabled: true
-logstash:
-  enabled: false
+  esConfig:
+    elasticsearch.yml: |
+      path.repo: ["/targer-index"]
+      repositories.url.allowed_urls: ["https://ltdata1.informatik.uni-hamburg.de/targer/*", "https://files.webis.de/data-in-production/targer/*"]
