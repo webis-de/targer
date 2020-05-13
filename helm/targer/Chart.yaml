@@ -2,7 +2,7 @@ apiVersion: v2
 name: targer
 description: "TARGER: Neural Argument Mining at Your Fingertips"
 type: application
-home: https://github.com/heinrichreimer/targer
+home: https://github.com/webis-de/targer
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
