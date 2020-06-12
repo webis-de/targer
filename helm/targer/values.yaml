@@ -3,13 +3,13 @@
 # Declare variables to be passed into your templates.
 
 frontend:
-  url: http://betaweb128.medien.uni-weimar.de:30294/
+  url: http://betaweb001.medien.uni-weimar.de:30294/
   port: 30294
   image: webis/targer-frontend:latest
   replicas: 1
 
 backend:
-  url: http://betaweb128.medien.uni-weimar.de:30293/
+  url: http://betaweb001.medien.uni-weimar.de:30293/
   port: 30293
   image: webis/targer-backend:latest
   replicas: 1
@@ -18,8 +18,9 @@ backend:
 
 # Elasticsearch configuration
 elasticsearch:
+  esMajorVersion: 6
+  imageTag: "6.2.3"
   clusterName: targer-es
-  replicas: 5
   volumeClaimTemplate:
     resources:
       requests:
@@ -31,12 +32,19 @@ elasticsearch:
   extraVolumes: |
     - name: targer-es-snapshot
       hostPath:
-        path: /mnt/ceph/storage/data-in-progress/targer/index/
+        path: /mnt/ceph/storage/data-in-progress/targer/snapshot/
         type: Directory
+#    - name: targer-es-backup
+#      hostPath:
+#        path: /mnt/ceph/storage/data-in-progress/targer/index/2020-02-25/srv/data/targer/
+#        type: Directory
   extraVolumeMounts: |
     - mountPath: /targer/snapshot/
       name: targer-es-snapshot
       readOnly: true
-
+#    - mountPath: /srv/data/targer/
+#      name: targer-es-backup
+#      readOnly: true
 kibana:
-  elasticsearchHosts: "http://targer-es-master:9200"
+  imageTag: "6.2.3"
+  elasticsearchHosts: "http://targer-es-master-0:9200"
