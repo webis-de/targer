@@ -1,9 +1,6 @@
 # Use an official Python runtime as a parent image
 FROM tiangolo/uwsgi-nginx-flask:python3.7
 
-# Set the working directory to /
-WORKDIR /
-
 # Install any needed packages specified in requirements.txt
 ADD requirements.txt /
 RUN pip install -r /requirements.txt && \
@@ -23,6 +20,9 @@ ENV STATIC_PATH /static
 
 # Add Python scripts
 ADD frontend.py wsgi.py /
+
+# Set the working directory to /
+WORKDIR /
 
 # Make port 6001 available to the world outside this container
 EXPOSE 6001

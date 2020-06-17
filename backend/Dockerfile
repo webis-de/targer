@@ -14,12 +14,16 @@ RUN pip install -r /emnlp2017-bilstm-cnn-crf/requirements.txt -r /requirements.t
 ADD backend.py Model.py ModelNewES.py ModelNewWD.py /emnlp2017-bilstm-cnn-crf/
 ADD BiLSTM.py /emnlp2017-bilstm-cnn-crf/neuralnets/
 
+# Add configuration
+ADD config.ini /emnlp2017-bilstm-cnn-crf/
+
 VOLUME /emnlp2017-bilstm-cnn-crf/models/
+
+# Set the working directory to /
+WORKDIR /emnlp2017-bilstm-cnn-crf
 
 # Make port 6000 available to the world outside this container
 EXPOSE 6000
-
-WORKDIR /emnlp2017-bilstm-cnn-crf
 
 # Run app.py when the container launches
 CMD ["python3", "backend.py"]
