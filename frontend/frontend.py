@@ -21,12 +21,10 @@ import json
 import spacy
 
 nlp = spacy.load('xx')
-# path = "/argsearch/"
-path = "./"
 
 config_parser = configparser.ConfigParser()
 config_parser.read('config.ini')
-config = config_parser['DEV']
+config = config_parser['frontend']
 
 
 class ReverseProxied(object):
@@ -50,9 +48,7 @@ class ReverseProxied(object):
 app = Flask(__name__)
 app.json_encoder = LazyJSONEncoder
 
-ES_SERVER = {"host": config["es_host"], "port": int(config["es_port"])}
-INDEX_NAME = 'arguments'
-es = Elasticsearch(hosts=[ES_SERVER])
+es = Elasticsearch(hosts=[{"host": config["es_host"], "port": int(config["es_port"])}])
 
 reversed = True
 
@@ -67,7 +63,10 @@ api = Api(app)
 
 
 def create_api_url(endpoint):
-    return 'http://' + config["backend_host"] + ":" + config["backend_port"] + "/" + endpoint
+    api_endpoint = config["api_endpoint"]
+    if not api_endpoint.endswith("/"):
+        api_endpoint += "/"
+    return api_endpoint + endpoint
 
 
 class Sender:
@@ -103,9 +102,8 @@ sender = Sender()
 
 @app.route('/')
 def index():
-    if request.url[-1] != '/':
-        return redirect(request.url + '/')
-    return render_template('template_main.html', title="Argument Entity Visualizer", page="index", path=path)
+    return render_template('template_main.html', title="Argument Entity Visualizer", page="index",
+                           api_url=config["api_url"], source_url=config["source_url"], paper_doi=config["paper_doi"])
 
 
 @app.route('/search_text', methods=['POST'])
@@ -244,7 +242,7 @@ def search_in_es(query, where_to_seach, confidence):
     if len(search_elements) == 0:
         search_elements.append(get_search_field("sentences", "sentences.text", search_query))
 
-    res = es.search(index=INDEX_NAME, request_timeout=60, body={"from": 0, "size": 25,
+    res = es.search(index=config["es_index"], request_timeout=60, body={"from": 0, "size": 25,
 
                                                                 "query": {
                                                                     "bool": {
@@ -355,4 +353,4 @@ def adjust_punctuation(text):
 if __name__ == "__main__":
     app.jinja_env.auto_reload = True
     app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.run(host=config["publish_host"], port=int(config["publish_port"]), debug=False)
+    app.run(host=config["host"], port=int(config["port"]), debug=False)
