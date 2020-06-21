@@ -1,13 +1,16 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Chart.Name }}-frontend-config-map
+  name: {{ .Release.Name }}-frontend-config-map
 data:
   config.ini: |
-    [DEV]
-    publish_host = 0.0.0.0
-    publish_port = 6001
-    backend_host = {{ .Chart.Name }}-backend
-    backend_port = 6000
-    es_host = {{ .Chart.Name }}-es-master
-    es_port = 9200
+    [frontend]
+    host = 0.0.0.0
+    port = 6001
+    api_endpoint = {{ .Values.backend.url }}
+    es_host = {{ .Values.elasticsearch.host }}
+    es_port = {{ .Values.elasticsearch.port }}
+    es_index = {{ .Values.elasticsearch.index }}
+    source_url = {{ .Values.info.sourceUrl }}
+    api_url = {{ .Values.backend.url }}apidocs/
+    paper_doi = {{ .Values.info.paperDoi }}

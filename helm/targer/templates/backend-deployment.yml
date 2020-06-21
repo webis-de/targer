@@ -2,31 +2,37 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Chart.Name }}-backend
-  name: {{ .Chart.Name }}-backend
+    app: {{ .Release.Name }}-backend
+  name: {{ .Release.Name }}-backend
 spec:
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}-backend
+      app: {{ .Release.Name }}-backend
   replicas: {{ .Values.backend.replicas }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}-backend
+        app: {{ .Release.Name }}-backend
     spec:
       containers:
-      - name: {{ .Chart.Name }}-backend
+      - name: {{ .Release.Name }}-backend
         image: {{ .Values.backend.image }}
         resources:
           requests:
             memory: 15Gi
         volumeMounts:
         - mountPath: /emnlp2017-bilstm-cnn-crf/models/
-          name: {{ .Chart.Name }}-backend-models
+          name: {{ .Release.Name }}-backend-models
           readOnly: true
+        - name: {{ .Release.Name }}-backend-config
+          mountPath: /emnlp2017-bilstm-cnn-crf/config.ini
+          subPath: config.ini
       restartPolicy: Always
       volumes:
-      - name: {{ .Chart.Name }}-backend-models
+      - name: {{ .Release.Name }}-backend-models
         hostPath:
           path: {{ .Values.backend.modelsPath }}
           type: Directory
+      - name: {{ .Release.Name }}-backend-config
+        configMap:
+          name: {{ .Release.Name }}-backend-config-map

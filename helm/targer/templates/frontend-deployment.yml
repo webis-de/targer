@@ -2,27 +2,27 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: {{ .Chart.Name }}-frontend
-  name: {{ .Chart.Name }}-frontend
+    service: {{ .Release.Name }}-frontend
+  name: {{ .Release.Name }}-frontend
 spec:
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}-frontend
+      app: {{ .Release.Name }}-frontend
   replicas: {{ .Values.frontend.replicas }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}-frontend
+        app: {{ .Release.Name }}-frontend
     spec:
       containers:
-      - name: {{ .Chart.Name }}-frontend
+      - name: {{ .Release.Name }}-frontend
         image: {{ .Values.frontend.image }}
         volumeMounts:
-        - name: {{ .Chart.Name }}-frontend-config
+        - name: {{ .Release.Name }}-frontend-config
           mountPath: /config.ini
           subPath: config.ini
       restartPolicy: Always
       volumes:
-      - name: {{ .Chart.Name }}-frontend-config
+      - name: {{ .Release.Name }}-frontend-config
         configMap:
-          name: {{ .Chart.Name }}-frontend-config-map
+          name: {{ .Release.Name }}-frontend-config-map

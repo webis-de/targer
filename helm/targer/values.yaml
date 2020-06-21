@@ -3,48 +3,25 @@
 # Declare variables to be passed into your templates.
 
 frontend:
-  url: http://betaweb001.medien.uni-weimar.de:30294/
+#  url: https://demo.webis.de/targer/
   port: 30294
-  image: webis/targer-frontend:latest
-  replicas: 1
+  image: webis/targer-frontend:0.1.3
+  replicas: 3
 
 backend:
-  url: http://betaweb001.medien.uni-weimar.de:30293/
+  url: https://demo.webis.de/targer-api/
   port: 30293
-  image: webis/targer-backend:latest
-  replicas: 1
-  # Paths of models and index snapshot on each host's file system.
+  root: /targer-api
+  image: webis/targer-backend:0.1.3
+  replicas: 3
+  # Paths of models on each host's file system.
   modelsPath: /mnt/ceph/storage/data-in-progress/targer/models/
 
-# Elasticsearch configuration
 elasticsearch:
-  esMajorVersion: 6
-  imageTag: "6.2.3"
-  clusterName: targer-es
-  volumeClaimTemplate:
-    resources:
-      requests:
-        storage: 2Ti
-  esConfig:
-    elasticsearch.yml: |
-      path.repo:
-      - /targer/snapshot/
-  extraVolumes: |
-    - name: targer-es-snapshot
-      hostPath:
-        path: /mnt/ceph/storage/data-in-progress/targer/snapshot/
-        type: Directory
-#    - name: targer-es-backup
-#      hostPath:
-#        path: /mnt/ceph/storage/data-in-progress/targer/index/2020-02-25/srv/data/targer/
-#        type: Directory
-  extraVolumeMounts: |
-    - mountPath: /targer/snapshot/
-      name: targer-es-snapshot
-      readOnly: true
-#    - mountPath: /srv/data/targer/
-#      name: targer-es-backup
-#      readOnly: true
-kibana:
-  imageTag: "6.2.3"
-  elasticsearchHosts: "http://targer-es-master-0:9200"
+  host: betaweb020.medien.uni-weimar.de
+  port: 9200
+  index: args
+
+info:
+  sourceUrl: https://github.com/webis-de/targer
+  paperDoi: 10.18653/v1/P19-3031
