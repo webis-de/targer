@@ -23,7 +23,7 @@ jobs:
         registry: docker.pkg.github.com
         username: ${{ github.actor }}
         password: ${{ github.token }}
-        repository: ${{ github.repository }}/frontend
+        repository: ${{ github.repository }}/targer-frontend
         tag_with_ref: true
         path: frontend
         labels: org.opencontainers.image.url=https://github.com/${{ github.repository }},org.opencontainers.image.documentation=https://github.com/${{ github.repository }},org.opencontainers.image.title=TARGER,org.opencontainers.image.description=Neural Argument Mining at Your Fingertips
@@ -50,7 +50,7 @@ jobs:
         registry: docker.pkg.github.com
         username: ${{ github.actor }}
         password: ${{ github.token }}
-        repository: ${{ github.repository }}/backend
+        repository: ${{ github.repository }}/targer-backend
         tag_with_ref: true
         path: backend
         labels: org.opencontainers.image.url=https://github.com/${{ github.repository }},org.opencontainers.image.documentation=https://github.com/${{ github.repository }},org.opencontainers.image.title=TARGER,org.opencontainers.image.description=Neural Argument Mining at Your Fingertips
