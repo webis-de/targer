@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 
-from flask import Flask, jsonify, request
-from flasgger import Swagger, LazyString, LazyJSONEncoder
-from flask_restful import Api, Resource, reqparse
+from flask import Flask, request
+from flasgger import Swagger, LazyJSONEncoder
+from flask_restful import Api, Resource
 from flask import make_response
-from nltk.tokenize import sent_tokenize, word_tokenize
-import random
 import json
 import configparser
 from flask import jsonify
-import json
 
 config_parser = configparser.ConfigParser()
 config_parser.read('config.ini')
@@ -55,7 +52,6 @@ modelWD_dep = Model("WD_dep.h5")
 # # https://github.com/keras-team/keras/issues/2397
 modelWD_dep.label("Therefore fixed punishment will")
 
-
 app = Flask(__name__)
 app.json_encoder = LazyJSONEncoder
 
@@ -66,6 +62,7 @@ class ReverseProxied(object):
 
     def __call__(self, environ, start_response):
         script_name = environ.get('HTTP_X_SCRIPT_NAME', '')
+
         if script_name:
             environ['SCRIPT_NAME'] = script_name
             if environ['PATH_INFO'].startswith(script_name):
@@ -79,22 +76,32 @@ class ReverseProxied(object):
 
 app.wsgi_app = ReverseProxied(app.wsgi_app)
 
+app.config['SWAGGER']['favicon'] = "https://assets.webis.de/img/favicon.png"
+
+swagger_config = {
+    "specs": [
+        {
+            "endpoint": 'TARGER',
+            "route": '../apispec_1.json',
+        }
+    ],
+    "static_url_path": "/static",
+    "swagger_ui": True,
+    "specs_route": "/docs/"
+}
 
 template = {
-    "swaggerUiPrefix": LazyString(lambda: request.environ.get('HTTP_X_SCRIPT_NAME', '')),
     "info": {
         "title": "TARGER API",
         "description": "Neural Argument Mining at Your Fingertips",
         "contact": {
             "responsibleOrganization": "Webis",
-            "responsibleDeveloper": "Jan Heinrich Reimer",
-            "email": "jan.reimer@student.uni-halle.de",
             "url": "https://webis.de/",
         },
         "termsOfService": "https://webis.de/legal.html",
     },
 }
-Swagger(app, template=template)
+Swagger(app, config=swagger_config, template=template)
 api = Api(app)
 
 
