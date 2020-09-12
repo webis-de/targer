@@ -242,13 +242,19 @@ def search_in_es(query, where_to_seach, confidence):
     if len(search_elements) == 0:
         search_elements.append(get_search_field("sentences", "sentences.text", search_query))
 
-    res = es.search(index=config["es_index"], request_timeout=60, body={"from": 0, "size": 25,
-
-                                                                "query": {
-                                                                    "bool": {
-                                                                        "should": search_elements
-                                                                    }
-                                                                }})
+    res = es.search(
+        index=config["es_index"],
+        request_timeout=120,
+        body={
+            "from": 0,
+            "size": 25,
+            "query": {
+                "bool": {
+                    "should": search_elements
+                }
+            }
+        }
+    )
 
     query_words = search_query.strip().split()
     print("Got %d Hits:" % res['hits']['total'])
