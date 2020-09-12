@@ -147,10 +147,10 @@ function search_action() {
         .fail(function (jqxhr, textStatus, error) {
             var err = textStatus + ", " + error;
             console.log("Request Failed: " + err);
-            var h = document.createElement("H1")                // Create a <h1> element
-            var t = document.createTextNode("No results found. (Timeout)");     // Create a text node
+            var h = document.createElement("h2")                // Create a <h2> element
+            var t = document.createTextNode("We're sorry, your search timed out. 😥");     // Create a text node
             h.appendChild(t);
-            $("#displacy").append(h);                                   // Append the text to <h1>
+            $("#displacy").append(h);                                   // Append the text to <h2>
             document.getElementById("button_search").disabled = false;
         });
     return false;
