@@ -147,9 +147,10 @@ function search_action() {
         .fail(function (jqxhr, textStatus, error) {
             var err = textStatus + ", " + error;
             console.log("Request Failed: " + err);
-            var h = document.createElement("h2")                // Create a <h2> element
-            var t = document.createTextNode("We're sorry, your search timed out. 😥");     // Create a text node
+            var h = document.createElement("h4")                // Create a <h2> element
+            var t = document.createTextNode("We're sorry 😥 Your search timed out, please try again.");     // Create a text node
             h.appendChild(t);
+            $("#displacy").empty();
             $("#displacy").append(h);                                   // Append the text to <h2>
             document.getElementById("button_search").disabled = false;
         });
