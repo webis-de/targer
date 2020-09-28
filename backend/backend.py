@@ -87,7 +87,7 @@ template = {
         "title": "TARGER API",
         "description": "Neural Argument Mining at Your Fingertips",
         "contact": {
-            "responsibleOrganization": "Webis",
+            "responsibleOrganization": "Webis Group",
             "url": "https://webis.de/",
         },
         "termsOfService": "https://webis.de/legal.html",
