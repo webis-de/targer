@@ -17,6 +17,19 @@ spec:
       containers:
       - name: {{ .Release.Name }}-frontend
         image: {{ .Values.frontend.image }}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 6001
+          periodSeconds: 15
+          timeoutSeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /apidocs
+            port: 6001
+          periodSeconds: 15
+          timeoutSeconds: 15
+          failureThreshold: 4
         volumeMounts:
         - name: {{ .Release.Name }}-frontend-config
           mountPath: /config.ini

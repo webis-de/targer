@@ -20,6 +20,19 @@ spec:
         resources:
           requests:
             memory: 15Gi
+        readinessProbe:
+          httpGet:
+            path: /apidocs
+            port: 6000
+          periodSeconds: 15
+          timeoutSeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /apidocs
+            port: 6000
+          periodSeconds: 15
+          timeoutSeconds: 15
+          failureThreshold: 4
         volumeMounts:
         - mountPath: /emnlp2017-bilstm-cnn-crf/models/
           name: {{ .Release.Name }}-backend-models
