@@ -82,18 +82,6 @@ if 'SWAGGER' not in app.config:
 
 app.config['SWAGGER']['favicon'] = "https://assets.webis.de/img/favicon.png"
 
-swagger_config = {
-    "specs": [
-        {
-            "endpoint": 'TARGER',
-            "route": '../apispec_1.json',
-        }
-    ],
-    "static_url_path": "/static",
-    "swagger_ui": True,
-    "specs_route": "/docs/"
-}
-
 template = {
     "info": {
         "title": "TARGER API",
@@ -105,7 +93,7 @@ template = {
         "termsOfService": "https://webis.de/legal.html",
     },
 }
-Swagger(app, config=swagger_config, template=template)
+Swagger(app, template=template)
 api = Api(app)
 
 
