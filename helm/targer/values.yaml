@@ -5,14 +5,14 @@
 frontend:
 #  url: https://demo.webis.de/targer/
   port: 30294
-  image: webis/targer-frontend:0.1.3
+  image: webis/targer-frontend:0.1.7
   replicas: 3
 
 backend:
   url: https://demo.webis.de/targer-api/
   port: 30293
   root: /targer-api
-  image: webis/targer-backend:0.1.3
+  image: webis/targer-backend:0.1.7
   replicas: 3
   # Paths of models on each host's file system.
   modelsPath: /mnt/ceph/storage/data-in-progress/targer/models/
