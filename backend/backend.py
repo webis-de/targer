@@ -76,6 +76,10 @@ class ReverseProxied(object):
 
 app.wsgi_app = ReverseProxied(app.wsgi_app)
 
+# Initialize Swagger config if not exists.
+if 'SWAGGER' not in app.config:
+    app.config['SWAGGER'] = {}
+
 app.config['SWAGGER']['favicon'] = "https://assets.webis.de/img/favicon.png"
 
 swagger_config = {
