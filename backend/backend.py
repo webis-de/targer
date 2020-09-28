@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
 from flask import Flask, request
-from flasgger import Swagger, LazyJSONEncoder
+from flasgger import Swagger, LazyString, LazyJSONEncoder
 from flask_restful import Api, Resource
 from flask import make_response
-import json
 import configparser
 from flask import jsonify
 
@@ -92,6 +91,7 @@ template = {
         },
         "termsOfService": "https://webis.de/legal.html",
     },
+    "swaggerUiPrefix": LazyString(lambda : request.environ.get('HTTP_X_SCRIPT_NAME', ''))
 }
 Swagger(app, template=template)
 api = Api(app)
