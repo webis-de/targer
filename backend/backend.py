@@ -100,7 +100,7 @@ api = Api(app)
 class ClassifyNewWD(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (Essays model, fasttext - big dataset)
+       Classifies input text to argument structure (WebD model, GloVe embeddings)
        ---
        consumes:
          - text/plain
@@ -132,7 +132,7 @@ class ClassifyNewWD(Resource):
 class ClassifyNewPE(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (Essays model, fasttext embeddings)
+       Classifies input text to argument structure (Essays model, GloVe embeddings)
 
        ---
        consumes:
@@ -165,7 +165,7 @@ class ClassifyNewPE(Resource):
 class ClassifyES(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (Essays model, fasttext embeddings)
+       Classifies input text to argument structure (Essays model, fastText embeddings)
        ---
        consumes:
          - text/plain
@@ -197,7 +197,7 @@ class ClassifyES(Resource):
 class ClassifyWD(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (WebD model, fasttext - big dataset)
+       Classifies input text to argument structure (WebD model, fastText embeddings)
        ---
        consumes:
          - text/plain
@@ -229,7 +229,7 @@ class ClassifyWD(Resource):
 class ClassifyES_dep(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (Essays model, dependency based)
+       Classifies input text to argument structure (Essays model, dependency-based embeddings)
        ---
        consumes:
          - text/plain
@@ -261,7 +261,7 @@ class ClassifyES_dep(Resource):
 class ClassifyWD_dep(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (WebD model, dependency based)
+       Classifies input text to argument structure (WebD model, dependency-based embeddings)
        ---
        consumes:
          - text/plain
@@ -293,7 +293,7 @@ class ClassifyWD_dep(Resource):
 class ClassifyIBM(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (IBM model, fasttext - big dataset)
+       Classifies input text to argument structure (IBM model, fastText embeddings)
        ---
        consumes:
          - text/plain
@@ -325,7 +325,7 @@ class ClassifyIBM(Resource):
 class ClassifyCombo(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (Combo model - big dataset)
+       Classifies input text to argument structure (Combo model from <a href="https://github.com/uhh-lt/targer/blob/a2a89ebfb366bc723a38dae963f8cb8b130f7e81/backend/backend.py#L305">Universität Hamburg</a>)
        ---
        consumes:
          - text/plain
@@ -354,14 +354,34 @@ class ClassifyCombo(Resource):
         return response
 
 
-api.add_resource(ClassifyES, '/classifyES')
-api.add_resource(ClassifyWD, '/classifyWD')
-api.add_resource(ClassifyES_dep, '/classifyES_dep')
-api.add_resource(ClassifyWD_dep, '/classifyWD_dep')
-api.add_resource(ClassifyIBM, '/classifyIBM')
+class DeprecatedResource(Resource):
+    def __init__(self, resource: Resource):
+        self.resource = resource
+
+    def post(self):
+        """
+        Deprecated.
+        ---
+        deprecated: true
+        """
+        return self.resource.post()
+
+
+api.add_resource(ClassifyIBM, '/classifyIBMfasttext')
+api.add_resource(ClassifyES_dep, '/classifyPEdep')
+api.add_resource(ClassifyES, '/classifyPEfasttext')
+api.add_resource(ClassifyNewPE, '/classifyPEglove')
+api.add_resource(ClassifyWD_dep, '/classifyWDdep')
+api.add_resource(ClassifyWD, '/classifyWDfasttext')
+api.add_resource(ClassifyNewWD, '/classifyWDglove')
 api.add_resource(ClassifyCombo, '/classifyCombo')
-api.add_resource(ClassifyNewPE, '/classifyNewPE')
-api.add_resource(ClassifyNewWD, '/classifyNewWD')
+api.add_resource(DeprecatedResource(ClassifyIBM), '/classifyIBM')
+api.add_resource(DeprecatedResource(ClassifyES_dep), '/classifyES_dep')
+api.add_resource(DeprecatedResource(ClassifyES), '/classifyES')
+api.add_resource(DeprecatedResource(ClassifyNewPE), '/classifyNewPE')
+api.add_resource(DeprecatedResource(ClassifyWD_dep), '/classifyWD_dep')
+api.add_resource(DeprecatedResource(ClassifyWD), '/classifyWD')
+api.add_resource(DeprecatedResource(ClassifyNewWD), '/classifyNewWD')
 
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True

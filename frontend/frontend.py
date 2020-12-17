@@ -72,22 +72,22 @@ def create_api_url(endpoint):
 class Sender:
     def send(self, text, classifier):
 
-        if classifier == "WD":
-            url = create_api_url("classifyWD")
-        elif classifier == "WD_dep":
-            url = create_api_url("classifyWD_dep")
-        elif classifier == "ES":
-            url = create_api_url("classifyES")
+        if classifier == "IBM":
+            url = create_api_url("classifyIBMfasttext")
         elif classifier == "ES_dep":
-            url = create_api_url("classifyES_dep")
-        elif classifier == "IBM":
-            url = create_api_url("classifyIBM")
+            url = create_api_url("classifyPEdep")
+        elif classifier == "ES":
+            url = create_api_url("classifyPEfasttext")
+        elif classifier == "NEWPE":
+            url = create_api_url("classifyPEglove")
+        elif classifier == "WD_dep":
+            url = create_api_url("classifyWDdep")
+        elif classifier == "WD":
+            url = create_api_url("classifyWDfasttext")
+        elif classifier == "NEWWD":
+            url = create_api_url("classifyWDglove")
         elif classifier == "Combo":
             url = create_api_url("classifyCombo")
-        elif classifier == "NEWPE":
-            url = create_api_url("classifyNewPE")
-        elif classifier == "NEWWD":
-            url = create_api_url("classifyNewWD")
 
         try:
             r = requests.post(url, data=text.encode("utf-8"))
