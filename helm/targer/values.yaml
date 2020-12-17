@@ -15,7 +15,7 @@ backend:
   image: webis/targer-backend:0.1.10
   replicas: 3
   # Paths of models on each host's file system.
-  modelsPath: /mnt/ceph/storage/data-in-progress/targer/models/
+  modelsPath: /mnt/ceph/storage/data-in-production/data-research/acqua/targer/models/
 
 elasticsearch:
   host: betaweb020.medien.uni-weimar.de

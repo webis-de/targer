@@ -52,18 +52,18 @@ For detailed documentation about the tagging library refer to [its repository](h
 
 ## Quick run web application with docker
 
-1. Download all the [pre-trained model files](https://files.webis.de/data-in-production/targer/models/)
+1. Download all the [pre-trained model files](https://files.webis.de/data-in-production/data-research/acqua/targer/models/)
 to the `models` directory:
 ```shell script
 cd models
-wget https://files.webis.de/data-in-production/targer/models/COMBO.h5
-wget https://files.webis.de/data-in-production/targer/models/ES.h5
-wget https://files.webis.de/data-in-production/targer/models/ES_dep.h5
-wget https://files.webis.de/data-in-production/targer/models/IBM.h5
-wget https://files.webis.de/data-in-production/targer/models/WD.h5
-wget https://files.webis.de/data-in-production/targer/models/WD_dep.h5
-wget https://files.webis.de/data-in-production/targer/models/model_new_es.hdf5
-wget https://files.webis.de/data-in-production/targer/models/model_new_wd.hdf5
+wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/COMBO.h5
+wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/ES.h5
+wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/ES_dep.h5
+wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/IBM.h5
+wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/WD.h5
+wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/WD_dep.h5
+wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/model_new_es.hdf5
+wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/model_new_wd.hdf5
 ```
 2. Run the demo using Docker: 
 `docker-compose up`
