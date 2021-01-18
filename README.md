@@ -75,3 +75,8 @@ and the backend REST API at [localhost:6000](http://localhost:6000).
 * [System architecture](https://github.com/uhh-lt/argument-search-engine/wiki/System-architecture)
 * [Installation guide](https://github.com/uhh-lt/argument-search-engine/wiki/Installation-guide)
 * [User guide](https://github.com/uhh-lt/argument-search-engine/wiki/User-guide)
+
+## License
+
+The TARGER source code after the [fork](https://github.com/webis-de/targer/commit/522af7f0a11ecb608374f865b714c3bb73a9cfdf) off [uhh-lt/targer](https://github.com/uhh-lt/targer) is released under the [MIT license](LICENSE).
+Once [uhh-lt/targer#52](https://github.com/uhh-lt/targer/pull/52) is merged, the complete repo can be licensed freely.
