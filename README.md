@@ -42,29 +42,32 @@ For detailed documentation about the tagging library refer to [its repository](h
 ## Quick setup with Docker
 
 1. Clone this repository:
-    ```shell
+
+    ```shell script
     git clone https://github.com/webis-de/targer && cd targer
     ```
+
 1. Download [pre-trained model files](https://files.webis.de/data-in-production/data-research/acqua/targer/models/) to the `models` directory:
-    ```shell
-    cd models
-    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/COMBO.h5
-    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/ES.h5
-    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/ES_dep.h5
-    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/IBM.h5
-    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/WD.h5
-    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/WD_dep.h5
-    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/model_new_es.hdf5
-    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/model_new_wd.hdf5
+
+    ```shell script
+    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/ \
+      --recursive --level=1 \
+      --no-directories --no-host-directories \
+      --accept=h5,hdf5 --directory-prefix=models
     ```
+
 1. Run the demo using Docker:
-    ```shell
+
+    ```shell script
     docker-compose up
     ```
+
 1. Access the frontend at [localhost:6001](http://localhost:6001) and the backend REST-like API at [localhost:6000](http://localhost:6000).
 
 ## Documentation
+
 Here you can find more detailed documentation of the system architecture, installation, and usage:
+
 * [System architecture](documentation/system-architecture.md)
 * [Installation guide](documentation/installation-guide.md)
 * [User guide](documentation/user-guide.md)
