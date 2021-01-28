@@ -6,25 +6,17 @@
 
 # TARGER: Neural Argument Mining at Your Fingertips
 
-This page contains code of the Web application and web service 
-based on the neural [argument tagger](http://github.com/achernodub/bilstm-cnn-crf-tagger).
-The figure below illustrates how the sytem looks like: 
-you can enter some text in the input box and detect arguments in it 
-with one of the pre-trained neural models for argument mining. 
+This page contains code of the web application and web service based on the neural [argument tagger](http://github.com/achernodub/targer).
+You can enter some text in the input box and detect arguments in it with one of the pre-trained neural models for argument mining. 
 
-**The front-end code is based on MIT licensed [displacy-ent](https://github.com/explosion/displacy-ent) 
-by [ExplosionAI](http://explosion.ai). We are thankful to [Ines Motani](https://github.com/ines) 
-for developing this piece of software and making it publicly available under the MIT license.** 
-
-More specifically, this repository shares code and data related to the following demo paper:
-
+More specifically, this repository shares code and data related to the following demo paper:  
 *Artem Chernodub, Oleksiy Oliynyk, Philipp Heidenreich, Alexander Bondarenko, Matthias Hagen, 
 Chris Biemann, and Alexander Panchenko (2019):
-[TARGER: Neural Argument Mining at Your Fingertips](https://www.inf.uni-hamburg.de/en/inst/ab/lt/publications/2019-chernodubetal-acl19demo-targer.pdf). 
+[TARGER: Neural Argument Mining at Your Fingertips](https://webis.de/publications.html#bondarenko_2019b). 
 In Proceedings of the 57th Annual Meeting of the Association of Computational Linguistics (ACL'2019). Florence, Italy.*
 
 If you use the demo or would like to refer to it, please cite the paper mentioned above. 
-You can also use the following BibTeX information for citation: 
+You can use the following BibTeX information for citation: 
 
 ```bibtex
 @inproceedings{chernodub2019targer,
@@ -37,46 +29,49 @@ You can also use the following BibTeX information for citation:
 }
 ```
 
-Below you will find some instructions on how to run the TARGER web application and its API locally (using docker).
-Alternatively you can just [access it online](http://ltdemos.informatik.uni-hamburg.de/targer/) 
-though web interface or using API. 
-This web application relies on a [neural tagging library](http://github.com/achernodub/targer) 
-based on the [PyTorch](https://pytorch.org) framework. 
-You may also find this library useful on its own, i.e. for training sequence taggers for argument mining, 
-but also for other tasks, such as part of speech tagging or named entity recognition.
-The library is taking as input CoNLL files, is easy to use, and has a minimal number of dependencies.
-Note that while this library lives in a separate repository from the web application,
-it is also part of the TARGER project.
+Below you will find instructions on how to run the TARGER web application and its API locally (using Docker).
+Alternatively you can just access the [online demo](https://demo.webis.de/targer) though web interface or using API. 
+
+The web application relies on a [neural tagging library](http://github.com/achernodub/targer) based on the [PyTorch](https://pytorch.org) framework. 
+You may also find this library useful on its own, e.g., for training sequence taggers for argument mining, part of speech tagging, or named entity recognition.
+The library is taking CoNLL files as input, is easy to use, and has a minimal number of dependencies.
+Though the library lives in a separate repository, it is also part of the TARGER project.
 So if you are using the library, please also cite the paper mentioned above.
-For detailed documentation about the tagging library refer to [its repository](http://github.com/achernodub/targer).  
+For detailed documentation about the tagging library refer to [its repository](http://github.com/achernodub/targer).
 
-## Quick run web application with docker
+## Quick setup with Docker
 
-1. Download all the [pre-trained model files](https://files.webis.de/data-in-production/data-research/acqua/targer/models/)
-to the `models` directory:
-```shell script
-cd models
-wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/COMBO.h5
-wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/ES.h5
-wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/ES_dep.h5
-wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/IBM.h5
-wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/WD.h5
-wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/WD_dep.h5
-wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/model_new_es.hdf5
-wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/model_new_wd.hdf5
-```
-2. Run the demo using Docker: 
-`docker-compose up`
-3. Access the frontend at [localhost:6001](http://localhost:6001) 
-and the backend REST API at [localhost:6000](http://localhost:6000).
+1. Clone this repository:
+    ```shell
+    git clone https://github.com/webis-de/targer && cd targer
+    ```
+1. Download [pre-trained model files](https://files.webis.de/data-in-production/data-research/acqua/targer/models/) to the `models` directory:
+    ```shell
+    cd models
+    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/COMBO.h5
+    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/ES.h5
+    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/ES_dep.h5
+    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/IBM.h5
+    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/WD.h5
+    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/WD_dep.h5
+    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/model_new_es.hdf5
+    wget https://files.webis.de/data-in-production/data-research/acqua/targer/models/model_new_wd.hdf5
+    ```
+1. Run the demo using Docker:
+    ```shell
+    docker-compose up
+    ```
+1. Access the frontend at [localhost:6001](http://localhost:6001) and the backend REST-like API at [localhost:6000](http://localhost:6000).
 
 ## Documentation
-
-* [System architecture](https://github.com/uhh-lt/argument-search-engine/wiki/System-architecture)
-* [Installation guide](https://github.com/uhh-lt/argument-search-engine/wiki/Installation-guide)
-* [User guide](https://github.com/uhh-lt/argument-search-engine/wiki/User-guide)
+Here you can find more detailed documentation of the system architecture, installation, and usage:
+* [System architecture](documentation/system-architecture.md)
+* [Installation guide](documentation/installation-guide.md)
+* [User guide](documentation/user-guide.md)
 
 ## License
 
 The TARGER source code after the [fork](https://github.com/webis-de/targer/commit/522af7f0a11ecb608374f865b714c3bb73a9cfdf) off [uhh-lt/targer](https://github.com/uhh-lt/targer) is released under the [MIT license](LICENSE).
 Once [uhh-lt/targer#52](https://github.com/uhh-lt/targer/pull/52) is merged, the complete repo can be licensed freely.
+
+Parts of the frontend source code are based on [displacy-ent](https://github.com/explosion/displacy-ent) which is licensed under the MIT license. 
