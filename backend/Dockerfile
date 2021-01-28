@@ -2,9 +2,10 @@
 FROM python:3.5
 
 # Clone third-party repos.
-# TODO: Which tags should we clone? Cloning from master could break build at any time.
 RUN git clone --depth 1 https://github.com/UKPLab/emnlp2017-bilstm-cnn-crf.git /emnlp2017-bilstm-cnn-crf
+RUN git -C /emnlp2017-bilstm-cnn-crf checkout b709f580f11c33c0f9951a0afdc3e71a252c93fd
 RUN git clone --depth 1 https://github.com/achernodub/targer.git /emnlp2017-bilstm-cnn-crf/lstm
+RUN git -C /emnlp2017-bilstm-cnn-crf/lstm checkout 25d196c645711e68e9fe874ca7e98475e31e493d
 
 # Install any needed packages specified in requirements.txt
 ADD requirements.txt /
