@@ -78,6 +78,8 @@ _Hint: this document describes the same setup as the backend [`Dockerfile`](../b
     Alternatively, you can use the backend with a Nginx web server and WSGI.
     Use the included `uwsgi.ini` to load it in the environment.
 
+    _Note: The backend requires all models to fit into memory. Thus you won't be able to run the backend if you have less than 8GB free memory available on your machine._
+
 ### Setup frontend
 
 1. Go to frontend directory:
@@ -95,16 +97,16 @@ _Hint: this document describes the same setup as the backend [`Dockerfile`](../b
     pip install -r requirements.txt
     ```
 
-1. Run the server:  
-    - In development mode:
+1. Run the server in development mode:
 
-        ```shell
-        python frontend.py
+    ```shell
+    python frontend.py
         ```
 
-    - With Nginx web server and WSGI, you can use the included `uwsgi.ini` to load it in the environment.
+    Alternatively, you can use the frontend with a Nginx web server and WSGI.
+    Use the included `uwsgi.ini` to load it in the environment.
 
-_Note: Argument search will only work if the configured Elasticsearch holds the configured arguments index, i.e. [indexed previously](#setup-elasticsearch-indexing)._
+    _Note: Argument search will only work if the configured Elasticsearch holds the configured arguments index, i.e. [indexed previously](#setup-elasticsearch-indexing)._
 
 ### Setup Elasticsearch indexing
 
