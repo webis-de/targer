@@ -97,11 +97,12 @@ def parse_arguments(filename):
 parser = argparse.ArgumentParser(description='Index data')
 parser.add_argument("-input", help="file to parse")
 parser.add_argument("-host", help="host name")
+parser.add_argument("-index", help="index name", default="arguments")
 parser.add_argument("-port", help="port", type=int)
 args = parser.parse_args()
 
 ES_SERVER = {"host": args.host, "port": args.port}
-INDEX_NAME = 'arguments'
+INDEX_NAME = args.index
 
 # init ES
 es = Elasticsearch(hosts=[ES_SERVER])
