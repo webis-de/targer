@@ -104,6 +104,8 @@ _Hint: this document describes the same setup as the backend [`Dockerfile`](../b
 
     - With Nginx web server and WSGI, you can use the included `uwsgi.ini` to load it in the environment.
 
+_Note: Argument search will only work if the configured Elasticsearch holds the configured arguments index, i.e. [indexed previously](#setup-elasticsearch-indexing)._
+
 ### Setup Elasticsearch indexing
 
 1. Install and run [Elasticsearch](https://www.elastic.co/elasticsearch/)
