@@ -17,6 +17,17 @@ spec:
       containers:
       - name: {{ .Release.Name }}-frontend
         image: {{ .Values.frontend.image }}
+        env:
+          - name: ES_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-elasticsearch-login
+                key: username
+          - name: ES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-elasticsearch-login
+                key: password
         volumeMounts:
         - name: {{ .Release.Name }}-frontend-config
           mountPath: /config.ini

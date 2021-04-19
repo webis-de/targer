@@ -20,6 +20,8 @@ backend:
 elasticsearch:
   host: betaweb020.medien.uni-weimar.de
   port: 9200
+  username: "" # Override username with `--set elasticsearch.username=EXAMPLE` Helm option.
+  password: "" # Override username with `--set elasticsearch.password=EXAMPLE` Helm option.
   index: args
 
 info:
