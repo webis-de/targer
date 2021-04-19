@@ -13,6 +13,7 @@ import urllib.parse
 from flask import render_template
 from json import JSONDecodeError
 import requests
+import os
 from elasticsearch import Elasticsearch
 import re
 import json
@@ -48,7 +49,21 @@ class ReverseProxied(object):
 app = Flask(__name__)
 app.json_encoder = LazyJSONEncoder
 
-es = Elasticsearch(hosts=[{"host": config["es_host"], "port": int(config["es_port"])}])
+if os.getenv("ES_USERNAME") and os.getenv("ES_PASSWORD"):
+    auth = (os.getenv("ES_USERNAME"), os.getenv("ES_PASSWORD"))
+else:
+    auth = None
+
+es = Elasticsearch(
+    hosts=[
+        {
+            "host": config["es_host"],
+            "port": int(config["es_port"])
+        }
+    ],
+    http_auth=auth,
+    use_ssl=auth is not None,
+)
 
 reversed = True
 
