@@ -84,14 +84,27 @@ app.config['SWAGGER']['favicon'] = "https://assets.webis.de/img/favicon.png"
 template = {
     "info": {
         "title": "TARGER API",
-        "description": "Neural Argument Mining at Your Fingertips",
+        "description": "Demo API for our [ACL 2019 paper](https://doi.org/10.18653/v1/P19-3031):\n"
+                       "_TARGER: Neural Argument Mining at Your Fingertips_\n"
+                       "\n"
+                       "This API serves the TARGER [demo web app](https://demo.webis.de/targer/).",
         "contact": {
-            "responsibleOrganization": "Webis Group",
+            "name": "Webis Group",
             "url": "https://webis.de/",
         },
+        "license": {
+            "name": "MIT License",
+            "url": "https://opensource.org/licenses/MIT",
+        },
         "termsOfService": "https://webis.de/legal.html",
+        'uiversion': 2,
     },
-    "swaggerUiPrefix": LazyString(lambda : request.environ.get('HTTP_X_SCRIPT_NAME', ''))
+    "externalDocs": {
+        "description": "GitHub repository",
+        "url": "https://github.com/webis-de/targer",
+    },
+    "basePath": LazyString(lambda : request.environ.get('HTTP_X_SCRIPT_NAME', '')),
+    "swaggerUiPrefix": LazyString(lambda : request.environ.get('HTTP_X_SCRIPT_NAME', '')),
 }
 Swagger(app, template=template)
 api = Api(app)
