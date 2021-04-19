@@ -563,6 +563,10 @@ class DeprecatedResource(Resource):
     def __init__(self, resource: Resource):
         self.resource = resource
 
+    @property
+    def __name__(self):
+        return "Deprecated {}".format(self.resource.__name__)
+
     def post(self):
         """
         Deprecated endpoint. Use updated endpoint instead.
