@@ -113,7 +113,9 @@ api = Api(app)
 class ClassifyNewWD(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (WebD model, GloVe embeddings)
+       Classify argument structure (WebD model, GloVe embeddings)
+
+       Classify input text to argument structure using the WebD model with GloVe embeddings.
        ---
        consumes:
          - text/plain
@@ -122,18 +124,40 @@ class ClassifyNewWD(Resource):
            name: text
            type: string
            required: true
-           description: Text to classify
-           example: Quebecan independence is justified. In the special episode in Japan, his system is restored by a doctor who wishes to use his independence for her selfish reasons.
-       responses:
-         200:
-           description: A list of tagged tokens annotated with labels
-           schema:
-             id: argument-structure
-             properties:
-               argument-structure:
-                 type: string
-                 description: JSON-List
-                 default: No input text set
+           description: Text to classify argument structure.
+           example: "Quebecan independence is justified.
+             In the special episode in Japan, his system is restored by a doctor
+             who wishes to use his independence for her selfish reasons."
+        responses:
+          200:
+            description: List of sentences of tokens, annotated with labels.
+            schema:
+              $ref: "#/definitions/Sentences"
+        definitions:
+          Sentences:
+            type: array
+            items:
+              $ref: "#/definitions/Sentence"
+          Sentence:
+            type: array
+            items:
+              $ref: "#/definitions/Token"
+          Token:
+            type: object
+            required:
+              - label
+              - prob
+              - token
+            properties:
+              label:
+                type: string
+                example: "P-I"
+              prob:
+                type: number
+                example: 0.985
+              token:
+                type: string
+                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelNewWD.label(inputtext)
@@ -145,8 +169,9 @@ class ClassifyNewWD(Resource):
 class ClassifyNewPE(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (Essays model, GloVe embeddings)
+       Classify argument structure (Essays model, GloVe embeddings)
 
+       Classify input text to argument structure using the Essays model with GloVe embeddings.
        ---
        consumes:
          - text/plain
@@ -155,18 +180,40 @@ class ClassifyNewPE(Resource):
            name: text
            type: string
            required: true
-           description: Text to classify
-           example: Quebecan independence is justified. In the special episode in Japan, his system is restored by a doctor who wishes to use his independence for her selfish reasons.
-       responses:
-         200:
-           description: A list of tagged tokens annotated with labels
-           schema:
-             id: argument-structure
-             properties:
-               argument-structure:
-                 type: string
-                 description: JSON-List
-                 default: No input text set
+           description: Text to classify argument structure.
+           example: "Quebecan independence is justified.
+             In the special episode in Japan, his system is restored by a doctor
+             who wishes to use his independence for her selfish reasons."
+        responses:
+          200:
+            description: List of sentences of tokens, annotated with labels.
+            schema:
+              $ref: "#/definitions/Sentences"
+        definitions:
+          Sentences:
+            type: array
+            items:
+              $ref: "#/definitions/Sentence"
+          Sentence:
+            type: array
+            items:
+              $ref: "#/definitions/Token"
+          Token:
+            type: object
+            required:
+              - label
+              - prob
+              - token
+            properties:
+              label:
+                type: string
+                example: "P-I"
+              prob:
+                type: number
+                example: 0.985
+              token:
+                type: string
+                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelNewES.label(inputtext)
@@ -178,7 +225,9 @@ class ClassifyNewPE(Resource):
 class ClassifyES(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (Essays model, fastText embeddings)
+       Classify argument structure (Essays model, fastText embeddings)
+
+       Classify input text to argument structure using the Essays model with fastText embeddings.
        ---
        consumes:
          - text/plain
@@ -187,18 +236,40 @@ class ClassifyES(Resource):
            name: text
            type: string
            required: true
-           description: Text to classify 
-           example: Quebecan independence is justified. In the special episode in Japan, his system is restored by a doctor who wishes to use his independence for her selfish reasons.
-       responses:
-         200:
-           description: A list of tagged tokens annotated with labels
-           schema:
-             id: argument-structure
-             properties:
-               argument-structure:
-                 type: string
-                 description: JSON-List
-                 default: No input text set
+           description: Text to classify argument structure.
+           example: "Quebecan independence is justified.
+             In the special episode in Japan, his system is restored by a doctor
+             who wishes to use his independence for her selfish reasons."
+        responses:
+          200:
+            description: List of sentences of tokens, annotated with labels.
+            schema:
+              $ref: "#/definitions/Sentences"
+        definitions:
+          Sentences:
+            type: array
+            items:
+              $ref: "#/definitions/Sentence"
+          Sentence:
+            type: array
+            items:
+              $ref: "#/definitions/Token"
+          Token:
+            type: object
+            required:
+              - label
+              - prob
+              - token
+            properties:
+              label:
+                type: string
+                example: "P-I"
+              prob:
+                type: number
+                example: 0.985
+              token:
+                type: string
+                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelES.label_with_probs(inputtext)
@@ -210,7 +281,9 @@ class ClassifyES(Resource):
 class ClassifyWD(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (WebD model, fastText embeddings)
+       Classify argument structure (WebD model, fastText embeddings)
+
+       Classify input text to argument structure using the WebD model with fastText embeddings.
        ---
        consumes:
          - text/plain
@@ -219,18 +292,40 @@ class ClassifyWD(Resource):
            name: text
            type: string
            required: true
-           description: Text to classify
-           example: Quebecan independence is justified. In the special episode in Japan, his system is restored by a doctor who wishes to use his independence for her selfish reasons.
-       responses:
-         200:
-           description: A list of tagged tokens annotated with labels
-           schema:
-             id: argument-structure
-             properties:
-               argument-structure:
-                 type: string
-                 description: JSON-List
-                 default: No input text set
+           description: Text to classify argument structure.
+           example: "Quebecan independence is justified.
+             In the special episode in Japan, his system is restored by a doctor
+             who wishes to use his independence for her selfish reasons."
+        responses:
+          200:
+            description: List of sentences of tokens, annotated with labels.
+            schema:
+              $ref: "#/definitions/Sentences"
+        definitions:
+          Sentences:
+            type: array
+            items:
+              $ref: "#/definitions/Sentence"
+          Sentence:
+            type: array
+            items:
+              $ref: "#/definitions/Token"
+          Token:
+            type: object
+            required:
+              - label
+              - prob
+              - token
+            properties:
+              label:
+                type: string
+                example: "P-I"
+              prob:
+                type: number
+                example: 0.985
+              token:
+                type: string
+                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelWD.label_with_probs(inputtext)
@@ -242,7 +337,9 @@ class ClassifyWD(Resource):
 class ClassifyES_dep(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (Essays model, dependency-based embeddings)
+       Classify argument structure (Essays model, dependency-based embeddings)
+
+       Classify input text to argument structure using the Essays model with dependency-based embeddings.
        ---
        consumes:
          - text/plain
@@ -251,18 +348,40 @@ class ClassifyES_dep(Resource):
            name: text
            type: string
            required: true
-           description: Text to classify
-           example: Quebecan independence is justified. In the special episode in Japan, his system is restored by a doctor who wishes to use his independence for her selfish reasons.
-       responses:
-         200:
-           description: A list of tagged tokens annotated with labels
-           schema:
-             id: argument-structure
-             properties:
-               argument-structure:
-                 type: string
-                 description: JSON-List
-                 default: No input text set
+           description: Text to classify argument structure.
+           example: "Quebecan independence is justified.
+             In the special episode in Japan, his system is restored by a doctor
+             who wishes to use his independence for her selfish reasons."
+        responses:
+          200:
+            description: List of sentences of tokens, annotated with labels.
+            schema:
+              $ref: "#/definitions/Sentences"
+        definitions:
+          Sentences:
+            type: array
+            items:
+              $ref: "#/definitions/Sentence"
+          Sentence:
+            type: array
+            items:
+              $ref: "#/definitions/Token"
+          Token:
+            type: object
+            required:
+              - label
+              - prob
+              - token
+            properties:
+              label:
+                type: string
+                example: "P-I"
+              prob:
+                type: number
+                example: 0.985
+              token:
+                type: string
+                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelES_dep.label_with_probs(inputtext)
@@ -274,7 +393,9 @@ class ClassifyES_dep(Resource):
 class ClassifyWD_dep(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (WebD model, dependency-based embeddings)
+       Classify argument structure (WebD model, dependency-based embeddings)
+
+       Classify input text to argument structure using the WebD model with dependency-based embeddings.
        ---
        consumes:
          - text/plain
@@ -283,18 +404,40 @@ class ClassifyWD_dep(Resource):
            name: text
            type: string
            required: true
-           description: Text to classify
-           example: Quebecan independence is justified. In the special episode in Japan, his system is restored by a doctor who wishes to use his independence for her selfish reasons.
-       responses:
-         200:
-           description: A list of tagged tokens annotated with labels
-           schema:
-             id: argument-structure
-             properties:
-               argument-structure:
-                 type: string
-                 description: JSON-List
-                 default: No input text set
+           description: Text to classify argument structure.
+           example: "Quebecan independence is justified.
+             In the special episode in Japan, his system is restored by a doctor
+             who wishes to use his independence for her selfish reasons."
+        responses:
+          200:
+            description: List of sentences of tokens, annotated with labels.
+            schema:
+              $ref: "#/definitions/Sentences"
+        definitions:
+          Sentences:
+            type: array
+            items:
+              $ref: "#/definitions/Sentence"
+          Sentence:
+            type: array
+            items:
+              $ref: "#/definitions/Token"
+          Token:
+            type: object
+            required:
+              - label
+              - prob
+              - token
+            properties:
+              label:
+                type: string
+                example: "P-I"
+              prob:
+                type: number
+                example: 0.985
+              token:
+                type: string
+                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelWD_dep.label_with_probs(inputtext)
@@ -306,7 +449,9 @@ class ClassifyWD_dep(Resource):
 class ClassifyIBM(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (IBM model, fastText embeddings)
+       Classify argument structure (IBM model, fastText embeddings)
+
+       Classify input text to argument structure using the IBM model with fastText embeddings.
        ---
        consumes:
          - text/plain
@@ -315,18 +460,40 @@ class ClassifyIBM(Resource):
            name: text
            type: string
            required: true
-           description: Text to classify
-           example: Quebecan independence is justified. In the special episode in Japan, his system is restored by a doctor who wishes to use his independence for her selfish reasons.
-       responses:
-         200:
-           description: A list of tagged tokens annotated with labels
-           schema:
-             id: argument-structure
-             properties:
-               argument-structure:
-                 type: string
-                 description: JSON-List
-                 default: No input text set
+           description: Text to classify argument structure.
+           example: "Quebecan independence is justified.
+             In the special episode in Japan, his system is restored by a doctor
+             who wishes to use his independence for her selfish reasons."
+        responses:
+          200:
+            description: List of sentences of tokens, annotated with labels.
+            schema:
+              $ref: "#/definitions/Sentences"
+        definitions:
+          Sentences:
+            type: array
+            items:
+              $ref: "#/definitions/Sentence"
+          Sentence:
+            type: array
+            items:
+              $ref: "#/definitions/Token"
+          Token:
+            type: object
+            required:
+              - label
+              - prob
+              - token
+            properties:
+              label:
+                type: string
+                example: "P-I"
+              prob:
+                type: number
+                example: 0.985
+              token:
+                type: string
+                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelIBM.label_with_probs(inputtext)
@@ -338,27 +505,52 @@ class ClassifyIBM(Resource):
 class ClassifyCombo(Resource):
     def post(self):
         """
-       Classifies input text to argument structure (Combo model from <a href="https://github.com/uhh-lt/targer/blob/a2a89ebfb366bc723a38dae963f8cb8b130f7e81/backend/backend.py#L305">Universität Hamburg</a>)
-       ---
-       consumes:
-         - text/plain
-       parameters:
-         - in: body
-           name: text
-           type: string
-           required: true
-           description: Text to classify
-           example: Quebecan independence is justified. In the special episode in Japan, his system is restored by a doctor who wishes to use his independence for her selfish reasons.
-       responses:
-         200:
-           description: A list of tagged tokens annotated with labels
-           schema:
-             id: argument-structure
-             properties:
-               argument-structure:
-                 type: string
-                 description: JSON-List
-                 default: No input text set
+        Classify argument structure (Combo model)
+
+        Classify input text to argument structure using the Combo model from [Universität
+        Hamburg](https://github.com/uhh-lt/targer/blob/a2a89ebfb366bc723a38dae963f8cb8b130f7e81/backend/backend.py#L305).
+        ---
+        consumes:
+          - text/plain
+        parameters:
+          - in: body
+            name: text
+            type: string
+            required: true
+            description: Text to classify argument structure.
+            example: "Quebecan independence is justified.
+              In the special episode in Japan, his system is restored by a doctor
+              who wishes to use his independence for her selfish reasons."
+        responses:
+          200:
+            description: List of sentences of tokens, annotated with labels.
+            schema:
+              $ref: "#/definitions/Sentences"
+        definitions:
+          Sentences:
+            type: array
+            items:
+              $ref: "#/definitions/Sentence"
+          Sentence:
+            type: array
+            items:
+              $ref: "#/definitions/Token"
+          Token:
+            type: object
+            required:
+              - label
+              - prob
+              - token
+            properties:
+              label:
+                type: string
+                example: "P-I"
+              prob:
+                type: number
+                example: 0.985
+              token:
+                type: string
+                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelCombo.label_with_probs(inputtext)
@@ -373,7 +565,7 @@ class DeprecatedResource(Resource):
 
     def post(self):
         """
-        Deprecated.
+        Deprecated endpoint. Use updated endpoint instead.
         ---
         deprecated: true
         """
