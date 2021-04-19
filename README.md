@@ -13,7 +13,7 @@ More specifically, this repository shares code and data related to the following
 *Artem Chernodub, Oleksiy Oliynyk, Philipp Heidenreich, Alexander Bondarenko, Matthias Hagen, 
 Chris Biemann, and Alexander Panchenko (2019):
 [TARGER: Neural Argument Mining at Your Fingertips](https://webis.de/publications.html#bondarenko_2019b). 
-In Proceedings of the 57th Annual Meeting of the Association of Computational Linguistics (ACL'2019). Florence, Italy.*
+In Proceedings of the 57th Annual Meeting of the Association of Computational Linguistics (ACL 2019). Florence, Italy.*
 
 If you use the demo or would like to refer to it, please cite the paper mentioned above. 
 You can use the following BibTeX information for citation: 
