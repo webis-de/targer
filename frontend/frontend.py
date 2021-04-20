@@ -88,21 +88,21 @@ class Sender:
     def send(self, text, classifier):
 
         if classifier == "IBM":
-            url = create_api_url("classifyIBMfasttext")
+            url = create_api_url("/tag-ibm-fasttext")
         elif classifier == "ES_dep":
-            url = create_api_url("classifyPEdep")
+            url = create_api_url("/tag-essays-dependency")
         elif classifier == "ES":
-            url = create_api_url("classifyPEfasttext")
+            url = create_api_url("/tag-essays-fasttext")
         elif classifier == "NEWPE":
-            url = create_api_url("classifyPEglove")
+            url = create_api_url("/tag-essays-glove")
         elif classifier == "WD_dep":
-            url = create_api_url("classifyWDdep")
+            url = create_api_url("/tag-webd-dependency")
         elif classifier == "WD":
-            url = create_api_url("classifyWDfasttext")
+            url = create_api_url("/tag-webd-fasttext")
         elif classifier == "NEWWD":
-            url = create_api_url("classifyWDglove")
+            url = create_api_url("/tag-webd-glove")
         elif classifier == "Combo":
-            url = create_api_url("classifyCombo")
+            url = create_api_url("/tag-combo")
 
         try:
             r = requests.post(url, data=text.encode("utf-8"))
