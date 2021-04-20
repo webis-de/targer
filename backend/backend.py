@@ -614,21 +614,23 @@ class DeprecatedResource(Resource):
         return self.resource.post()
 
 
-api.add_resource(ClassifyIBM, '/classifyIBMfasttext')
-api.add_resource(ClassifyES_dep, '/classifyPEdep')
-api.add_resource(ClassifyES, '/classifyPEfasttext')
-api.add_resource(ClassifyNewPE, '/classifyPEglove')
-api.add_resource(ClassifyWD_dep, '/classifyWDdep')
-api.add_resource(ClassifyWD, '/classifyWDfasttext')
-api.add_resource(ClassifyNewWD, '/classifyWDglove')
-api.add_resource(ClassifyCombo, '/classifyCombo')
-api.add_resource(DeprecatedResource(ClassifyIBM), '/classifyIBM')
+api.add_resource(ClassifyES_dep, '/tag-essays-dependency')
+api.add_resource(ClassifyES, '/tag-essays-fasttext')
+api.add_resource(ClassifyNewPE, '/tag-essays-glove')
+api.add_resource(ClassifyIBM, '/tag-ibm-fasttext')
+api.add_resource(ClassifyWD_dep, '/tag-webd-dependency')
+api.add_resource(ClassifyWD, '/tag-webd-fasttext')
+api.add_resource(ClassifyNewWD, '/tag-webd-glove')
+api.add_resource(ClassifyCombo, '/tag-combo')
+
 api.add_resource(DeprecatedResource(ClassifyES_dep), '/classifyES_dep')
 api.add_resource(DeprecatedResource(ClassifyES), '/classifyES')
 api.add_resource(DeprecatedResource(ClassifyNewPE), '/classifyNewPE')
+api.add_resource(DeprecatedResource(ClassifyIBM), '/classifyIBM')
 api.add_resource(DeprecatedResource(ClassifyWD_dep), '/classifyWD_dep')
 api.add_resource(DeprecatedResource(ClassifyWD), '/classifyWD')
 api.add_resource(DeprecatedResource(ClassifyNewWD), '/classifyNewWD')
+api.add_resource(DeprecatedResource(ClassifyCombo), '/classifyCombo')
 
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
