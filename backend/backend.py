@@ -22,33 +22,27 @@ modelNewES = ModelNewES()
 modelNewWD = ModelNewWD()
 
 modelIBM = Model("IBM.h5")
-# We must call this cause of a keras bug
-# https://github.com/keras-team/keras/issues/2397
+# We must call this cause of a keras bug: https://github.com/keras-team/keras/issues/2397
 modelIBM.label("Therefore fixed punishment will")
 
 modelCombo = Model("COMBO.h5")
-# We must call this cause of a keras bug
-# https://github.com/keras-team/keras/issues/2397
+# We must call this cause of a keras bug: https://github.com/keras-team/keras/issues/2397
 modelCombo.label("Therefore fixed punishment will")
 
 modelES = Model("ES.h5")
-# We must call this cause of a keras bug
-# https://github.com/keras-team/keras/issues/2397
+# We must call this cause of a keras bug: https://github.com/keras-team/keras/issues/2397
 modelES.label("Therefore fixed punishment will")
 
 modelWD = Model("WD.h5")
-# We must call this cause of a keras bug
-# https://github.com/keras-team/keras/issues/2397
+# We must call this cause of a keras bug: https://github.com/keras-team/keras/issues/2397
 modelWD.label("Therefore fixed punishment will")
 
 modelES_dep = Model("ES_dep.h5")
-# We must call this cause of a keras bug
-# https://github.com/keras-team/keras/issues/2397
+# We must call this cause of a keras bug: https://github.com/keras-team/keras/issues/2397
 modelES_dep.label("Therefore fixed punishment will")
 
 modelWD_dep = Model("WD_dep.h5")
-# We must call this cause of a keras bug
-# https://github.com/keras-team/keras/issues/2397
+# We must call this cause of a keras bug: https://github.com/keras-team/keras/issues/2397
 modelWD_dep.label("Therefore fixed punishment will")
 
 app = Flask(__name__)
