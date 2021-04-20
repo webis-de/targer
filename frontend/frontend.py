@@ -286,17 +286,20 @@ def search_in_es(query, where_to_seach, confidence):
             sentences = hit["_source"]["sentences"]
 
             field = "sentences"
-            if SEARCH_KEY_PREMISE in where_to_seach and hit["inner_hits"]["sentences.premises"]["hits"]["total"] > 0:
+            if SEARCH_KEY_PREMISE in where_to_seach and \
+                    hit["inner_hits"]["sentences.premises"]["hits"]["total"] > 0:
                 field = "sentences.premises"
-            elif SEARCH_KEY_CLAIM in where_to_seach and hit["inner_hits"]["sentences.claims"]["hits"]["total"] > 0:
+            elif SEARCH_KEY_CLAIM in where_to_seach and \
+                    hit["inner_hits"]["sentences.claims"]["hits"]["total"] > 0:
                 field = "sentences.claims"
-            elif SEARCH_KEY_ENTITY in where_to_seach and hit["inner_hits"]["sentences.entities"]["hits"]["total"] > 0:
+            elif SEARCH_KEY_ENTITY in where_to_seach and \
+                    hit["inner_hits"]["sentences.entities"]["hits"]["total"] > 0:
                 field = "sentences.entities"
 
             index_with_top_match = hit["inner_hits"][field]["hits"]["hits"][0]["_nested"]["offset"]
 
             # finding for sentences indexes to show
-            if len(sentences) < 7:
+            if len(sentences) < 2 * number_of_sentences_around + 1:
                 min_pos = 0
                 max_pos = len(sentences) - 1
             elif index_with_top_match < number_of_sentences_around:
@@ -305,9 +308,12 @@ def search_in_es(query, where_to_seach, confidence):
             elif index_with_top_match > (len(sentences) - (number_of_sentences_around * 2 + 2)):
                 min_pos = (len(sentences) - (number_of_sentences_around * 2 + 2))
                 max_pos = (len(sentences) - 1)
-            else:
+            elif index_with_top_match is not None:
                 min_pos = index_with_top_match - number_of_sentences_around
                 max_pos = index_with_top_match + number_of_sentences_around
+            else:
+                min_pos = 0
+                max_pos = number_of_sentences_around * 2
 
             for sentence_index in range(min_pos, max_pos + 1):
 
@@ -319,7 +325,7 @@ def search_in_es(query, where_to_seach, confidence):
                 # finding positions for claims
                 if SEARCH_KEY_CLAIM in where_to_seach:
                     for claim in sentence["claims"]:
-                        if (float(claim["score"]) > float(confidence) / 100):
+                        if float(claim["score"]) > float(confidence) / 100:
                             claim_adjusted = adjust_punctuation(claim["text"])
                             start_pos = sentence_text_adjusted.find(claim_adjusted)
                             end_pos = start_pos + len(claim_adjusted)
@@ -329,7 +335,7 @@ def search_in_es(query, where_to_seach, confidence):
                 # finding positions for premises
                 if SEARCH_KEY_PREMISE in where_to_seach:
                     for premise in sentence["premises"]:
-                        if (float(premise["score"]) > float(confidence) / 100):
+                        if float(premise["score"]) > float(confidence) / 100:
                             premise_adjusted = adjust_punctuation(premise["text"])
                             start_pos = sentence_text_adjusted.find(premise_adjusted)
                             end_pos = start_pos + len(premise_adjusted)
@@ -348,13 +354,19 @@ def search_in_es(query, where_to_seach, confidence):
                         text = adjust_punctuation(entity["text"])
                         start_pos = sentence_text_adjusted.find(text)
                         end_pos = start_pos + len(text)
-                        entity_positions.append({"type": type, "start": offset + start_pos, "end": offset + end_pos})
+                        entity_positions.append({
+                            "type": type,
+                            "start": offset + start_pos,
+                            "end": offset + end_pos
+                        })
 
             # finding positions for search query instances
             for word in query_words:
                 for match in set(re.findall(word, text_full, re.IGNORECASE)):
-                    positions = [{"type": "search", "start": m.start(), "end": m.end()} for m in
-                                 re.finditer(match, text_full)]
+                    positions = [
+                        {"type": "search", "start": m.start(), "end": m.end()}
+                        for m in re.finditer(match, text_full)
+                    ]
                     query_search_positions.extend(positions)
 
             doc["text_full"] = text_full
