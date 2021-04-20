@@ -1,1 +1,15 @@
-# TODO: Add instructions on how to get service IP addresses.
+Thank you for installing {{ .Chart.Name }} (as release name {{ .Release.Name }}).
+
+The {{ .Chart.Name | title }} backend runs on node port {{ .Values.backend.port }} with {{ .Values.backend.replicas }} replicas.
+Models are mounted at {{ .Values.backend.modelsPath }}.
+Make sure, this path is readable from each node and contains all models.
+
+The {{ .Chart.Name | title }} frontend runs on node port {{ .Values.frontend.port }} with {{ .Values.frontend.replicas }} replicas.
+
+You have configured {{ .Chart.Name | title }} to access the Elasticsearch index
+{{ .Values.elasticsearch.index }} on {{ .Values.elasticsearch.host }}:{{ .Values.elasticsearch.port }}.
+{{ if and .Values.elasticsearch.username .Values.elasticsearch.password }}
+Elasticsearch authentication is configured for user {{ .Values.elasticsearch.username }}.
+{{ else }}
+Elasticsearch authentication is not configured. Configure credentials with the `--set elasticsearch.username=EXAMPLE --set elasticsearch.password=EXAMPLE` options for the `helm` command, if you need to access a restricted Elasticsearch cluster.
+{{ end }}
