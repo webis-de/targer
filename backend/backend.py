@@ -75,12 +75,11 @@ class ReverseProxied(object):
 
 app.wsgi_app = ReverseProxied(app.wsgi_app)
 
-# Initialize Swagger config if not exists.
-if 'SWAGGER' not in app.config:
-    app.config['SWAGGER'] = {}
-
-app.config['SWAGGER']['favicon'] = "https://assets.webis.de/img/favicon.png"
-
+app.config['SWAGGER'] = {
+    'title': 'TARGER API',
+    'favicon': "https://assets.webis.de/img/favicon.png",
+    'uiversion': 3,
+}
 template = {
     "info": {
         "title": "TARGER API",
@@ -97,14 +96,13 @@ template = {
             "url": "https://opensource.org/licenses/MIT",
         },
         "termsOfService": "https://webis.de/legal.html",
-        'uiversion': 2,
     },
     "externalDocs": {
         "description": "GitHub repository",
         "url": "https://github.com/webis-de/targer",
     },
-    "basePath": LazyString(lambda : request.environ.get('HTTP_X_SCRIPT_NAME', '')),
-    "swaggerUiPrefix": LazyString(lambda : request.environ.get('HTTP_X_SCRIPT_NAME', '')),
+    "basePath": LazyString(lambda: request.environ.get('HTTP_X_SCRIPT_NAME', '')),
+    "swaggerUiPrefix": LazyString(lambda: request.environ.get('HTTP_X_SCRIPT_NAME', '')),
 }
 Swagger(app, template=template)
 api = Api(app)
