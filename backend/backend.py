@@ -111,21 +111,21 @@ api = Api(app)
 class ClassifyNewWD(Resource):
     def post(self):
         """
-       Classify argument structure (WebD model, GloVe embeddings)
-
-       Classify input text to argument structure using the WebD model with GloVe embeddings.
-       ---
-       consumes:
-         - text/plain
-       parameters:
-         - in: body
-           name: text
-           type: string
-           required: true
-           description: Text to classify argument structure.
-           example: "Quebecan independence is justified.
-             In the special episode in Japan, his system is restored by a doctor
-             who wishes to use his independence for her selfish reasons."
+        Tag arguments in free input text (WebD dataset, GloVe embeddings)
+        Tag input text with argument structures using [GloVe embeddings](https://doi.org/10.3115/v1/D14-1162) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
+        This model uses the BiLSTM-CNN-CRF sequence tagger implementation of [Chernodub et al. (2019)](https://doi.org/10.18653/v1/P19-3031).
+        ---
+        consumes:
+          - text/plain
+        parameters:
+          - in: body
+            name: text
+            type: string
+            required: true
+            description: Text to tag with argument structures.
+            example: "Quebecan independence is justified.
+                      In the special episode in Japan, his system is restored by a doctor
+                      who wishes to use his independence for her selfish reasons."
         responses:
           200:
             description: List of sentences of tokens, annotated with labels.
@@ -167,21 +167,21 @@ class ClassifyNewWD(Resource):
 class ClassifyNewPE(Resource):
     def post(self):
         """
-       Classify argument structure (Essays model, GloVe embeddings)
-
-       Classify input text to argument structure using the Essays model with GloVe embeddings.
-       ---
-       consumes:
-         - text/plain
-       parameters:
-         - in: body
-           name: text
-           type: string
-           required: true
-           description: Text to classify argument structure.
-           example: "Quebecan independence is justified.
-             In the special episode in Japan, his system is restored by a doctor
-             who wishes to use his independence for her selfish reasons."
+        Tag arguments in free input text (Essays dataset, GloVe embeddings)
+        Tag input text with argument structures using [GloVe embeddings](https://doi.org/10.3115/v1/D14-1162) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
+        This model uses the BiLSTM-CNN-CRF sequence tagger implementation of [Chernodub et al. (2019)](https://doi.org/10.18653/v1/P19-3031).
+        ---
+        consumes:
+          - text/plain
+        parameters:
+          - in: body
+            name: text
+            type: string
+            required: true
+            description: Text to tag with argument structures.
+            example: "Quebecan independence is justified.
+                      In the special episode in Japan, his system is restored by a doctor
+                      who wishes to use his independence for her selfish reasons."
         responses:
           200:
             description: List of sentences of tokens, annotated with labels.
@@ -223,21 +223,21 @@ class ClassifyNewPE(Resource):
 class ClassifyES(Resource):
     def post(self):
         """
-       Classify argument structure (Essays model, fastText embeddings)
-
-       Classify input text to argument structure using the Essays model with fastText embeddings.
-       ---
-       consumes:
-         - text/plain
-       parameters:
-         - in: body
-           name: text
-           type: string
-           required: true
-           description: Text to classify argument structure.
-           example: "Quebecan independence is justified.
-             In the special episode in Japan, his system is restored by a doctor
-             who wishes to use his independence for her selfish reasons."
+        Tag arguments in free input text (Essays dataset, fastText embeddings)
+        Tag input text with argument structures using [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
+        This model uses the BiLSTM-CNN-CRF sequence tagger implementation of [Reimers and Gurevych (2017)](https://doi.org/10.18653/v1/D17-1035).
+        ---
+        consumes:
+          - text/plain
+        parameters:
+          - in: body
+            name: text
+            type: string
+            required: true
+            description: Text to tag with argument structures.
+            example: "Quebecan independence is justified.
+                      In the special episode in Japan, his system is restored by a doctor
+                      who wishes to use his independence for her selfish reasons."
         responses:
           200:
             description: List of sentences of tokens, annotated with labels.
@@ -279,21 +279,21 @@ class ClassifyES(Resource):
 class ClassifyWD(Resource):
     def post(self):
         """
-       Classify argument structure (WebD model, fastText embeddings)
-
-       Classify input text to argument structure using the WebD model with fastText embeddings.
-       ---
-       consumes:
-         - text/plain
-       parameters:
-         - in: body
-           name: text
-           type: string
-           required: true
-           description: Text to classify argument structure.
-           example: "Quebecan independence is justified.
-             In the special episode in Japan, his system is restored by a doctor
-             who wishes to use his independence for her selfish reasons."
+        Tag arguments in free input text (WebD dataset, fastText embeddings)
+        Tag input text with argument structures using [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
+        This model uses the BiLSTM-CNN-CRF sequence tagger implementation of [Reimers and Gurevych (2017)](https://doi.org/10.18653/v1/D17-1035).
+        ---
+        consumes:
+          - text/plain
+        parameters:
+          - in: body
+            name: text
+            type: string
+            required: true
+            description: Text to tag with argument structures.
+            example: "Quebecan independence is justified.
+                      In the special episode in Japan, his system is restored by a doctor
+                      who wishes to use his independence for her selfish reasons."
         responses:
           200:
             description: List of sentences of tokens, annotated with labels.
@@ -335,21 +335,21 @@ class ClassifyWD(Resource):
 class ClassifyES_dep(Resource):
     def post(self):
         """
-       Classify argument structure (Essays model, dependency-based embeddings)
-
-       Classify input text to argument structure using the Essays model with dependency-based embeddings.
-       ---
-       consumes:
-         - text/plain
-       parameters:
-         - in: body
-           name: text
-           type: string
-           required: true
-           description: Text to classify argument structure.
-           example: "Quebecan independence is justified.
-             In the special episode in Japan, his system is restored by a doctor
-             who wishes to use his independence for her selfish reasons."
+        Tag arguments in free input text (Essays dataset, dependency-based embeddings)
+        Tag input text with argument structures using [dependency-based embeddings](https://doi.org/10.3115/v1/P14-2050) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
+        This model uses the BiLSTM-CNN-CRF sequence tagger implementation of [Reimers and Gurevych (2017)](https://doi.org/10.18653/v1/D17-1035).
+        ---
+        consumes:
+          - text/plain
+        parameters:
+          - in: body
+            name: text
+            type: string
+            required: true
+            description: Text to tag with argument structures.
+            example: "Quebecan independence is justified.
+                      In the special episode in Japan, his system is restored by a doctor
+                      who wishes to use his independence for her selfish reasons."
         responses:
           200:
             description: List of sentences of tokens, annotated with labels.
@@ -391,21 +391,21 @@ class ClassifyES_dep(Resource):
 class ClassifyWD_dep(Resource):
     def post(self):
         """
-       Classify argument structure (WebD model, dependency-based embeddings)
-
-       Classify input text to argument structure using the WebD model with dependency-based embeddings.
-       ---
-       consumes:
-         - text/plain
-       parameters:
-         - in: body
-           name: text
-           type: string
-           required: true
-           description: Text to classify argument structure.
-           example: "Quebecan independence is justified.
-             In the special episode in Japan, his system is restored by a doctor
-             who wishes to use his independence for her selfish reasons."
+        Tag arguments in free input text (WebD dataset, dependency-based embeddings)
+        Tag input text with argument structures using [dependency-based embeddings](https://doi.org/10.3115/v1/P14-2050) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
+        This model uses the BiLSTM-CNN-CRF sequence tagger implementation of [Reimers and Gurevych (2017)](https://doi.org/10.18653/v1/D17-1035).
+        ---
+        consumes:
+          - text/plain
+        parameters:
+          - in: body
+            name: text
+            type: string
+            required: true
+            description: Text to tag with argument structures.
+            example: "Quebecan independence is justified.
+                      In the special episode in Japan, his system is restored by a doctor
+                      who wishes to use his independence for her selfish reasons."
         responses:
           200:
             description: List of sentences of tokens, annotated with labels.
@@ -447,21 +447,21 @@ class ClassifyWD_dep(Resource):
 class ClassifyIBM(Resource):
     def post(self):
         """
-       Classify argument structure (IBM model, fastText embeddings)
-
-       Classify input text to argument structure using the IBM model with fastText embeddings.
-       ---
-       consumes:
-         - text/plain
-       parameters:
-         - in: body
-           name: text
-           type: string
-           required: true
-           description: Text to classify argument structure.
-           example: "Quebecan independence is justified.
-             In the special episode in Japan, his system is restored by a doctor
-             who wishes to use his independence for her selfish reasons."
+        Tag arguments in free input text (IBM dataset, fastText embeddings)
+        Tag input text with argument structures using [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [IBM dataset](https://aclweb.org/anthology/C18-1176).
+        This model uses the BiLSTM-CNN-CRF sequence tagger implementation of [Reimers and Gurevych (2017)](https://doi.org/10.18653/v1/D17-1035).
+        ---
+        consumes:
+          - text/plain
+        parameters:
+          - in: body
+            name: text
+            type: string
+            required: true
+            description: Text to tag with argument structures.
+            example: "Quebecan independence is justified.
+                      In the special episode in Japan, his system is restored by a doctor
+                      who wishes to use his independence for her selfish reasons."
         responses:
           200:
             description: List of sentences of tokens, annotated with labels.
@@ -503,10 +503,8 @@ class ClassifyIBM(Resource):
 class ClassifyCombo(Resource):
     def post(self):
         """
-        Classify argument structure (Combo model)
-
-        Classify input text to argument structure using the Combo model from [Universität
-        Hamburg](https://github.com/uhh-lt/targer/blob/a2a89ebfb366bc723a38dae963f8cb8b130f7e81/backend/backend.py#L305).
+        Tag arguments in free input text (Combo model)
+        Tag input text with argument structures using the Combo model from [Universität Hamburg](https://github.com/uhh-lt/targer/blob/a2a89ebfb366bc723a38dae963f8cb8b130f7e81/backend/backend.py#L305).
         ---
         consumes:
           - text/plain
@@ -515,10 +513,10 @@ class ClassifyCombo(Resource):
             name: text
             type: string
             required: true
-            description: Text to classify argument structure.
+            description: Text to tag with argument structures.
             example: "Quebecan independence is justified.
-              In the special episode in Japan, his system is restored by a doctor
-              who wishes to use his independence for her selfish reasons."
+                      In the special episode in Japan, his system is restored by a doctor
+                      who wishes to use his independence for her selfish reasons."
         responses:
           200:
             description: List of sentences of tokens, annotated with labels.
@@ -567,9 +565,51 @@ class DeprecatedResource(Resource):
 
     def post(self):
         """
-        Deprecated endpoint. Use updated endpoint instead.
+        Deprecated endpoint.
+        This endpoint has been renamed for consistency. Use the updated endpoint instead.
         ---
         deprecated: true
+        consumes:
+          - text/plain
+        parameters:
+          - in: body
+            name: text
+            type: string
+            required: true
+            description: Text to tag with argument structures.
+            example: "Quebecan independence is justified.
+                      In the special episode in Japan, his system is restored by a doctor
+                      who wishes to use his independence for her selfish reasons."
+        responses:
+          200:
+            description: List of sentences of tokens, annotated with labels.
+            schema:
+              $ref: "#/definitions/Sentences"
+        definitions:
+          Sentences:
+            type: array
+            items:
+              $ref: "#/definitions/Sentence"
+          Sentence:
+            type: array
+            items:
+              $ref: "#/definitions/Token"
+          Token:
+            type: object
+            required:
+              - label
+              - prob
+              - token
+            properties:
+              label:
+                type: string
+                example: "P-I"
+              prob:
+                type: number
+                example: 0.985
+              token:
+                type: string
+                example: "system"
         """
         return self.resource.post()
 
