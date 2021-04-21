@@ -1,0 +1,51 @@
+swagger: "2.0"
+paths: {} # Will be filled by Flasgger.
+info:
+  title: TARGER API,
+  version: 0.1.12
+  description: |
+    Demo API for our [ACL 2019 paper](https://doi.org/10.18653/v1/P19-3031):
+    _TARGER: Neural Argument Mining at Your Fingertips_
+
+    This API serves the TARGER [demo web app](https://demo.webis.de/targer/).
+  contact:
+    name: Webis Group
+    url: https://webis.de/
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://webis.de/legal.html
+externalDocs:
+  description: GitHub repository
+  url: https://github.com/webis-de/targer
+definitions:
+  Sentences:
+    description: List of sentences annotated with argument labels.
+    type: array
+    items:
+      $ref: "#/definitions/Sentence"
+  Sentence:
+    type: array
+    description: List of tokens annotated with argument labels.
+    items:
+      $ref: "#/definitions/Token"
+  Token:
+    type: object
+    description: Text token annotated with an argument label and label probability.
+    required:
+      - label
+      - prob
+      - token
+    properties:
+      label:
+        type: string
+        example: "P-I"
+      prob:
+        type: number
+        format: float
+        minimum: 0.0
+        maximum: 1.0
+        example: 0.985
+      token:
+        type: string
+        example: "system"

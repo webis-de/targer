@@ -12,7 +12,7 @@ ADD requirements.txt /
 RUN pip install -r /emnlp2017-bilstm-cnn-crf/requirements.txt -r /requirements.txt
 
 # Add Python scripts
-ADD backend.py Model.py ModelNewES.py ModelNewWD.py /emnlp2017-bilstm-cnn-crf/
+ADD backend.py Model.py ModelNewES.py ModelNewWD.py spec.yml /emnlp2017-bilstm-cnn-crf/
 ADD BiLSTM.py /emnlp2017-bilstm-cnn-crf/neuralnets/
 
 # Add configuration

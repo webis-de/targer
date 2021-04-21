@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-
+from pathlib import Path
 from flask import Flask, request
 from flasgger import Swagger, LazyString, LazyJSONEncoder
 from flask_restful import Api, Resource
 from flask import make_response
 import configparser
 from flask import jsonify
+import yaml
 
 config_parser = configparser.ConfigParser()
 config_parser.read('config.ini')
@@ -74,30 +75,15 @@ app.config['SWAGGER'] = {
     'favicon': "https://assets.webis.de/img/favicon.png",
     'uiversion': 3,
 }
-template = {
-    "info": {
-        "title": "TARGER API",
-        "description": "Demo API for our [ACL 2019 paper](https://doi.org/10.18653/v1/P19-3031):\n"
-                       "_TARGER: Neural Argument Mining at Your Fingertips_\n"
-                       "\n"
-                       "This API serves the TARGER [demo web app](https://demo.webis.de/targer/).",
-        "contact": {
-            "name": "Webis Group",
-            "url": "https://webis.de/",
-        },
-        "license": {
-            "name": "MIT License",
-            "url": "https://opensource.org/licenses/MIT",
-        },
-        "termsOfService": "https://webis.de/legal.html",
-    },
-    "externalDocs": {
-        "description": "GitHub repository",
-        "url": "https://github.com/webis-de/targer",
-    },
+
+# Load Swagger base spec from YAML file.
+with (Path(__file__).parent / "spec.yml").open("r") as stream:
+    template = yaml.safe_load(stream)
+# Update with properties only known at runtime.
+template.update({
     "basePath": LazyString(lambda: request.environ.get('HTTP_X_SCRIPT_NAME', '')),
     "swaggerUiPrefix": LazyString(lambda: request.environ.get('HTTP_X_SCRIPT_NAME', '')),
-}
+})
 Swagger(app, template=template)
 api = Api(app)
 

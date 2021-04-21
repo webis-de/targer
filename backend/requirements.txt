@@ -3,4 +3,4 @@ flasgger==0.9.4
 flask_restful==0.3.7
 torch==0.4.1
 torchvision==0.2.1
-
+PyYAML
