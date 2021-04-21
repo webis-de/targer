@@ -269,12 +269,15 @@ def search_in_es(query, where_to_seach, confidence):
 
     res = es.search(
         index=config["es_index"],
-        request_timeout=120,
-        body=body
+        request_timeout=60,
+        timeout="1m",
+        body=body,
     )
 
     query_words = search_query.strip().split()
-    print("Got %d Hits:" % res['hits']['total'])
+    # print("Got {}{} Hits:".format(
+    #     "≥" if res["hits"]["total"]["relation"] == "gte" else "",
+    #     res['hits']['total']['value']), file=sys.stderr)
     for hit in res['hits']['hits']:
         try:
             doc = {}
