@@ -369,7 +369,7 @@ api.add_resource(ClassifyIBM, '/tag-ibm-fasttext')
 api.add_resource(ClassifyWD_dep, '/tag-webd-dependency')
 api.add_resource(ClassifyWD, '/tag-webd-fasttext')
 api.add_resource(ClassifyNewWD, '/tag-webd-glove')
-api.add_resource(ClassifyCombo, '/tag-combo')
+api.add_resource(ClassifyCombo, '/tag-combined-fasttext')
 
 api.add_resource(DeprecatedResource(ClassifyES_dep), '/classifyES_dep')
 api.add_resource(DeprecatedResource(ClassifyES), '/classifyES')

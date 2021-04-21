@@ -102,7 +102,7 @@ class Sender:
         elif classifier == "NEWWD":
             url = create_api_url("/tag-webd-glove")
         elif classifier == "Combo":
-            url = create_api_url("/tag-combo")
+            url = create_api_url("/tag-combined-fasttext")
 
         try:
             r = requests.post(url, data=text.encode("utf-8"))
