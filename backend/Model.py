@@ -69,7 +69,7 @@ class Model:
 
                 currentWord['token'] = tokens[tokenIdx]
                 currentWord['label'] = tokenTags[0]
-                currentWord['prob'] = probTags[0]
+                currentWord['prob'] = float(probTags[0])
                 sentence.append(currentWord)
             result.append(sentence)
 
