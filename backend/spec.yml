@@ -1,7 +1,7 @@
 swagger: "2.0"
 paths: {} # Will be filled by Flasgger.
 info:
-  title: TARGER API,
+  title: TARGER API
   version: 0.1.12
   description: |
     Demo API for our [ACL 2019 paper](https://doi.org/10.18653/v1/P19-3031):
@@ -18,6 +18,11 @@ info:
 externalDocs:
   description: GitHub repository
   url: https://github.com/webis-de/targer
+tags:
+  - name: Argument tagging
+    description: Tag arguments in free input text with different models.
+  - name: Deprecated
+    description: Deprecated endpoints, kept for backwards compatibility.
 definitions:
   Sentences:
     description: List of sentences annotated with argument labels.

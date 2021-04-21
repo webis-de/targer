@@ -94,6 +94,8 @@ class ClassifyNewWD(Resource):
         Tag arguments in free input text (WebD dataset, GloVe embeddings)
         Tag input text with arguments using [GloVe embeddings](https://doi.org/10.3115/v1/D14-1162) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
         ---
+        tags:
+          - Argument tagging
         consumes:
           - text/plain
         parameters:
@@ -124,6 +126,8 @@ class ClassifyNewPE(Resource):
         Tag arguments in free input text (Essays dataset, GloVe embeddings)
         Tag input text with arguments using [GloVe embeddings](https://doi.org/10.3115/v1/D14-1162) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
         ---
+        tags:
+          - Argument tagging
         consumes:
           - text/plain
         parameters:
@@ -154,6 +158,8 @@ class ClassifyES(Resource):
         Tag arguments in free input text (Essays dataset, fastText embeddings)
         Tag input text with arguments using [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
         ---
+        tags:
+          - Argument tagging
         consumes:
           - text/plain
         parameters:
@@ -184,6 +190,8 @@ class ClassifyWD(Resource):
         Tag arguments in free input text (WebD dataset, fastText embeddings)
         Tag input text with arguments using [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
         ---
+        tags:
+          - Argument tagging
         consumes:
           - text/plain
         parameters:
@@ -214,6 +222,8 @@ class ClassifyES_dep(Resource):
         Tag arguments in free input text (Essays dataset, dependency-based embeddings)
         Tag input text with arguments using [dependency-based embeddings](https://doi.org/10.3115/v1/P14-2050) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
         ---
+        tags:
+          - Argument tagging
         consumes:
           - text/plain
         parameters:
@@ -244,6 +254,8 @@ class ClassifyWD_dep(Resource):
         Tag arguments in free input text (WebD dataset, dependency-based embeddings)
         Tag input text with arguments using [dependency-based embeddings](https://doi.org/10.3115/v1/P14-2050) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
         ---
+        tags:
+          - Argument tagging
         consumes:
           - text/plain
         parameters:
@@ -274,6 +286,8 @@ class ClassifyIBM(Resource):
         Tag arguments in free input text (IBM dataset, fastText embeddings)
         Tag input text with arguments using [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [IBM dataset](https://aclweb.org/anthology/C18-1176).
         ---
+        tags:
+          - Argument tagging
         consumes:
           - text/plain
         parameters:
@@ -304,6 +318,8 @@ class ClassifyCombo(Resource):
         Tag arguments in free input text (combined dataset, fastText embeddings)
         Tag input text with arguments using the [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [Essays](https://doi.org/10.18653/v1/P17-1002), [IBM](https://aclweb.org/anthology/C18-1176), and [WebD](https://doi.org/10.1162/COLI_a_00276) datasets.
         ---
+        tags:
+          - Argument tagging
         consumes:
           - text/plain
         parameters:
@@ -342,6 +358,8 @@ class DeprecatedResource(Resource):
         This endpoint has been renamed for consistency. Use the updated endpoint instead.
         ---
         deprecated: true
+        tags:
+          - Deprecated
         consumes:
           - text/plain
         parameters:
