@@ -1,7 +1,7 @@
 deprecated: true
 summary: Tag arguments in free input text (deprecated, combined dataset, fastText embeddings)
 description: |
-  _This endpoint has been renamed for consistency. Use `/tag-combined-fasttext` instead._
+  _This endpoint has been renamed for consistency and readability. Use `/tag-combined-fasttext` instead._
 
   Tag input text with arguments using the [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [Essays](https://doi.org/10.18653/v1/P17-1002), [IBM](https://aclweb.org/anthology/C18-1176), and [WebD](https://doi.org/10.1162/COLI_a_00276) datasets.
 tags:

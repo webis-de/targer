@@ -1,7 +1,7 @@
 deprecated: true
 summary: Tag arguments in free input text (deprecated, Essays dataset, dependency-based embeddings)
 description: |
-  _This endpoint has been renamed for consistency. Use `/tag-essays-dependency` instead._
+  _This endpoint has been renamed for consistency and readability. Use `/tag-essays-dependency` instead._
 
   Tag input text with arguments using [dependency-based embeddings](https://doi.org/10.3115/v1/P14-2050) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
 tags:

@@ -1,7 +1,7 @@
 deprecated: true
 summary: Tag arguments in free input text (deprecated, Essays dataset, GloVe embeddings)
 description: |
-  _This endpoint has been renamed for consistency. Use `/tag-essays-glove` instead._
+  _This endpoint has been renamed for consistency and readability. Use `/tag-essays-glove` instead._
 
   Tag input text with arguments using [GloVe embeddings](https://doi.org/10.3115/v1/D14-1162) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
 tags:

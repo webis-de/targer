@@ -1,7 +1,7 @@
 deprecated: true
 summary: Tag arguments in free input text (deprecated, WebD dataset, GloVe embeddings)
 description: |
-  _This endpoint has been renamed for consistency. Use `/tag-webd-glove` instead._
+  _This endpoint has been renamed for consistency and readability. Use `/tag-webd-glove` instead._
 
   Tag input text with arguments using [GloVe embeddings](https://doi.org/10.3115/v1/D14-1162) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
 tags:
