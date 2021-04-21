@@ -225,4 +225,4 @@ def tag_combined_fasttext_deprecated():
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-app.run(host=config["host"], port=int(config["port"]), debug=True)
+app.run(host=config["host"], port=int(config["port"]), debug=False)
