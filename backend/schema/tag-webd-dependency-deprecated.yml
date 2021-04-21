@@ -1,0 +1,25 @@
+deprecated: true
+summary: Tag arguments in free input text (deprecated, WebD dataset, dependency-based embeddings)
+description: |
+  _This endpoint has been renamed for consistency. Use `/tag-webd-dependency` instead._
+
+  Tag input text with arguments using [dependency-based embeddings](https://doi.org/10.3115/v1/P14-2050) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
+tags:
+  - Deprecated
+consumes:
+  - text/plain
+parameters:
+  - in: body
+    name: text
+    type: string
+    required: true
+    description: Text to tag with arguments.
+    example: |
+      Quebecan independence is justified.
+      In the special episode in Japan, his system is restored by a doctor
+      who wishes to use his independence for her selfish reasons.
+responses:
+  200:
+    description: Input text sentences annotated with argument labels.
+    schema:
+      $ref: "#/definitions/Sentences"

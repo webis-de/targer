@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 from flask import Flask, request
-from flasgger import Swagger, LazyString, LazyJSONEncoder
-from flask_restful import Api, Resource
+from flasgger import Swagger, LazyString, LazyJSONEncoder, swag_from
 from flask import make_response
 import configparser
 from flask import jsonify
@@ -77,138 +76,71 @@ app.config['SWAGGER'] = {
 }
 
 # Load Swagger base spec from YAML file.
-with (Path(__file__).parent / "spec.yml").open("r") as stream:
+schema_dir = Path(__file__).parent / "schema"
+with (schema_dir / "base.yml").open("r") as stream:
     template = yaml.safe_load(stream)
 # Update with properties only known at runtime.
 template.update({
     "basePath": LazyString(lambda: request.environ.get('HTTP_X_SCRIPT_NAME', '')),
     "swaggerUiPrefix": LazyString(lambda: request.environ.get('HTTP_X_SCRIPT_NAME', '')),
 })
-Swagger(app, template=template)
-api = Api(app)
+swagger = Swagger(app, template=template)
 
 
-class ClassifyNewWD(Resource):
-    def post(self):
-        """
-        Tag arguments in free input text (WebD dataset, GloVe embeddings)
-        Tag input text with arguments using [GloVe embeddings](https://doi.org/10.3115/v1/D14-1162) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
-        ---
-        tags:
-          - Argument tagging
-        consumes:
-          - text/plain
-        parameters:
-          - in: body
-            name: text
-            type: string
-            required: true
-            description: Text to tag with arguments.
-            example: "Quebecan independence is justified.
-                      In the special episode in Japan, his system is restored by a doctor
-                      who wishes to use his independence for her selfish reasons."
-        responses:
-          200:
-            description: Input text sentences annotated with argument labels.
-            schema:
-              $ref: "#/definitions/Sentences"
-        """
-        inputtext = request.get_data().decode('UTF-8')
-        result = modelNewWD.label(inputtext)
-        response = make_response(jsonify(result))
-        response.headers['content-type'] = 'application/json'
-        return response
+@app.route('/tag-webd-glove', methods=['POST'])
+@swag_from(str(schema_dir / "tag-webd-glove.yml"))
+def tag_webd_glove():
+    inputtext = request.get_data().decode('UTF-8')
+    result = modelNewWD.label(inputtext)
+    response = make_response(jsonify(result))
+    response.headers['content-type'] = 'application/json'
+    return response
 
 
-class ClassifyNewPE(Resource):
-    def post(self):
-        """
-        Tag arguments in free input text (Essays dataset, GloVe embeddings)
-        Tag input text with arguments using [GloVe embeddings](https://doi.org/10.3115/v1/D14-1162) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
-        ---
-        tags:
-          - Argument tagging
-        consumes:
-          - text/plain
-        parameters:
-          - in: body
-            name: text
-            type: string
-            required: true
-            description: Text to tag with arguments.
-            example: "Quebecan independence is justified.
-                      In the special episode in Japan, his system is restored by a doctor
-                      who wishes to use his independence for her selfish reasons."
-        responses:
-          200:
-            description: Input text sentences annotated with argument labels.
-            schema:
-              $ref: "#/definitions/Sentences"
-        """
-        inputtext = request.get_data().decode('UTF-8')
-        result = modelNewES.label(inputtext)
-        response = make_response(jsonify(result))
-        response.headers['content-type'] = 'application/json'
-        return response
+@app.route('/classifyNewWD', methods=['POST'])
+@app.route('/classifyWDglove', methods=['POST'])
+@swag_from(str(schema_dir / "tag-webd-glove-deprecated.yml"))
+def tag_webd_glove_deprecated():
+    return tag_webd_glove()
 
 
-class ClassifyES(Resource):
-    def post(self):
-        """
-        Tag arguments in free input text (Essays dataset, fastText embeddings)
-        Tag input text with arguments using [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
-        ---
-        tags:
-          - Argument tagging
-        consumes:
-          - text/plain
-        parameters:
-          - in: body
-            name: text
-            type: string
-            required: true
-            description: Text to tag with arguments.
-            example: "Quebecan independence is justified.
-                      In the special episode in Japan, his system is restored by a doctor
-                      who wishes to use his independence for her selfish reasons."
-        responses:
-          200:
-            description: Input text sentences annotated with argument labels.
-            schema:
-              $ref: "#/definitions/Sentences"
-        """
-        inputtext = request.get_data().decode('UTF-8')
-        result = modelES.label_with_probs(inputtext)
-        response = make_response(jsonify(result))
-        response.headers['content-type'] = 'application/json'
-        return response
+@app.route('/tag-essays-glove', methods=['POST'])
+@swag_from(str(schema_dir / "tag-essays-glove.yml"))
+def tag_essays_glove():
+    inputtext = request.get_data().decode('UTF-8')
+    result = modelNewES.label(inputtext)
+    response = make_response(jsonify(result))
+    response.headers['content-type'] = 'application/json'
+    return response
 
 
-class ClassifyWD(Resource):
-    def post(self):
-        """
-        Tag arguments in free input text (WebD dataset, fastText embeddings)
-        Tag input text with arguments using [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
-        ---
-        tags:
-          - Argument tagging
-        consumes:
-          - text/plain
-        parameters:
-          - in: body
-            name: text
-            type: string
-            required: true
-            description: Text to tag with arguments.
-            example: "Quebecan independence is justified.
-                      In the special episode in Japan, his system is restored by a doctor
-                      who wishes to use his independence for her selfish reasons."
-        responses:
-          200:
-            description: Input text sentences annotated with argument labels.
-            schema:
-              $ref: "#/definitions/Sentences"
-        """
+@app.route('/classifyNewPE', methods=['POST'])
+@app.route('/classifyPEglove', methods=['POST'])
+@swag_from(str(schema_dir / "tag-essays-glove-deprecated.yml"))
+def tag_essays_glove_deprecated():
+    return tag_essays_glove()
+
+
+@app.route('/tag-essays-fasttext', methods=['POST'])
+@swag_from(str(schema_dir / "tag-essays-fasttext.yml"))
+def tag_essays_fasttext():
+    inputtext = request.get_data().decode('UTF-8')
+    result = modelES.label_with_probs(inputtext)
+    response = make_response(jsonify(result))
+    response.headers['content-type'] = 'application/json'
+    return response
+
+
+@app.route('/classifyES', methods=['POST'])
+@app.route('/classifyPEfasttext', methods=['POST'])
+@swag_from(str(schema_dir / "tag-essays-fasttext-deprecated.yml"))
+def tag_essays_fasttext_deprecated():
+    return tag_essays_fasttext()
+
+
+@app.route('/tag-webd-fasttext', methods=['POST'])
+@swag_from(str(schema_dir / "tag-webd-fasttext.yml"))
+def tag_webd_fasttext():
         inputtext = request.get_data().decode('UTF-8')
         result = modelWD.label_with_probs(inputtext)
         response = make_response(jsonify(result))
@@ -216,193 +148,79 @@ class ClassifyWD(Resource):
         return response
 
 
-class ClassifyES_dep(Resource):
-    def post(self):
-        """
-        Tag arguments in free input text (Essays dataset, dependency-based embeddings)
-        Tag input text with arguments using [dependency-based embeddings](https://doi.org/10.3115/v1/P14-2050) pretrained on the [Essays dataset](https://doi.org/10.18653/v1/P17-1002).
-        ---
-        tags:
-          - Argument tagging
-        consumes:
-          - text/plain
-        parameters:
-          - in: body
-            name: text
-            type: string
-            required: true
-            description: Text to tag with arguments.
-            example: "Quebecan independence is justified.
-                      In the special episode in Japan, his system is restored by a doctor
-                      who wishes to use his independence for her selfish reasons."
-        responses:
-          200:
-            description: Input text sentences annotated with argument labels.
-            schema:
-              $ref: "#/definitions/Sentences"
-        """
-        inputtext = request.get_data().decode('UTF-8')
-        result = modelES_dep.label_with_probs(inputtext)
-        response = make_response(jsonify(result))
-        response.headers['content-type'] = 'application/json'
-        return response
+@app.route('/classifyWD', methods=['POST'])
+@app.route('/classifyWDfasttext', methods=['POST'])
+@swag_from(str(schema_dir / "tag-webd-fasttext-deprecated.yml"))
+def tag_webd_fasttext_deprecated():
+    return tag_webd_fasttext()
 
 
-class ClassifyWD_dep(Resource):
-    def post(self):
-        """
-        Tag arguments in free input text (WebD dataset, dependency-based embeddings)
-        Tag input text with arguments using [dependency-based embeddings](https://doi.org/10.3115/v1/P14-2050) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
-        ---
-        tags:
-          - Argument tagging
-        consumes:
-          - text/plain
-        parameters:
-          - in: body
-            name: text
-            type: string
-            required: true
-            description: Text to tag with arguments.
-            example: "Quebecan independence is justified.
-                      In the special episode in Japan, his system is restored by a doctor
-                      who wishes to use his independence for her selfish reasons."
-        responses:
-          200:
-            description: Input text sentences annotated with argument labels.
-            schema:
-              $ref: "#/definitions/Sentences"
-        """
-        inputtext = request.get_data().decode('UTF-8')
-        result = modelWD_dep.label_with_probs(inputtext)
-        response = make_response(jsonify(result))
-        response.headers['content-type'] = 'application/json'
-        return response
+@app.route('/tag-essays-dependency', methods=['POST'])
+@swag_from(str(schema_dir / "tag-essays-dependency.yml"))
+def tag_essays_dependency():
+    inputtext = request.get_data().decode('UTF-8')
+    result = modelES_dep.label_with_probs(inputtext)
+    response = make_response(jsonify(result))
+    response.headers['content-type'] = 'application/json'
+    return response
 
 
-class ClassifyIBM(Resource):
-    def post(self):
-        """
-        Tag arguments in free input text (IBM dataset, fastText embeddings)
-        Tag input text with arguments using [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [IBM dataset](https://aclweb.org/anthology/C18-1176).
-        ---
-        tags:
-          - Argument tagging
-        consumes:
-          - text/plain
-        parameters:
-          - in: body
-            name: text
-            type: string
-            required: true
-            description: Text to tag with arguments.
-            example: "Quebecan independence is justified.
-                      In the special episode in Japan, his system is restored by a doctor
-                      who wishes to use his independence for her selfish reasons."
-        responses:
-          200:
-            description: Input text sentences annotated with argument labels.
-            schema:
-              $ref: "#/definitions/Sentences"
-        """
-        inputtext = request.get_data().decode('UTF-8')
-        result = modelIBM.label_with_probs(inputtext)
-        response = make_response(jsonify(result))
-        response.headers['content-type'] = 'application/json'
-        return response
+@app.route('/classifyES_dep', methods=['POST'])
+@app.route('/classifyPEdep', methods=['POST'])
+@swag_from(str(schema_dir / "tag-essays-dependency-deprecated.yml"))
+def tag_essays_dependency_deprecated():
+    return tag_essays_dependency()
 
 
-class ClassifyCombo(Resource):
-    def post(self):
-        """
-        Tag arguments in free input text (combined dataset, fastText embeddings)
-        Tag input text with arguments using the [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [Essays](https://doi.org/10.18653/v1/P17-1002), [IBM](https://aclweb.org/anthology/C18-1176), and [WebD](https://doi.org/10.1162/COLI_a_00276) datasets.
-        ---
-        tags:
-          - Argument tagging
-        consumes:
-          - text/plain
-        parameters:
-          - in: body
-            name: text
-            type: string
-            required: true
-            description: Text to tag with arguments.
-            example: "Quebecan independence is justified.
-                      In the special episode in Japan, his system is restored by a doctor
-                      who wishes to use his independence for her selfish reasons."
-        responses:
-          200:
-            description: Input text sentences annotated with argument labels.
-            schema:
-              $ref: "#/definitions/Sentences"
-        """
-        inputtext = request.get_data().decode('UTF-8')
-        result = modelCombo.label_with_probs(inputtext)
-        response = make_response(jsonify(result))
-        response.headers['content-type'] = 'application/json'
-        return response
+@app.route('/tag-webd-dependency', methods=['POST'])
+@swag_from(str(schema_dir / "tag-webd-dependency.yml"))
+def tag_webd_dependency():
+    inputtext = request.get_data().decode('UTF-8')
+    result = modelWD_dep.label_with_probs(inputtext)
+    response = make_response(jsonify(result))
+    response.headers['content-type'] = 'application/json'
+    return response
 
 
-class DeprecatedResource(Resource):
-    def __init__(self, resource: Resource):
-        self.resource = resource
-
-    @property
-    def __name__(self):
-        return "Deprecated {}".format(self.resource.__name__)
-
-    def post(self):
-        """
-        Deprecated endpoint.
-        This endpoint has been renamed for consistency. Use the updated endpoint instead.
-        ---
-        deprecated: true
-        tags:
-          - Deprecated
-        consumes:
-          - text/plain
-        parameters:
-          - in: body
-            name: text
-            type: string
-            required: true
-            description: Text to tag with arguments.
-            example: "Quebecan independence is justified.
-                      In the special episode in Japan, his system is restored by a doctor
-                      who wishes to use his independence for her selfish reasons."
-        responses:
-          200:
-            description: Input text sentences annotated with argument labels.
-            schema:
-              $ref: "#/definitions/Sentences"
-        """
-        return self.resource.post()
+@app.route('/classifyWD_dep', methods=['POST'])
+@app.route('/classifyWDdep', methods=['POST'])
+@swag_from(str(schema_dir / "tag-webd-dependency-deprecated.yml"))
+def tag_webd_dependency_deprecated():
+    return tag_webd_dependency()
 
 
-api.add_resource(ClassifyES_dep, '/tag-essays-dependency')
-api.add_resource(DeprecatedResource(ClassifyES_dep), '/classifyES_dep')
-api.add_resource(DeprecatedResource(ClassifyES_dep), '/classifyPEdep')
-api.add_resource(ClassifyES, '/tag-essays-fasttext')
-api.add_resource(DeprecatedResource(ClassifyES), '/classifyES')
-api.add_resource(DeprecatedResource(ClassifyES), '/classifyPEfasttext')
-api.add_resource(ClassifyNewPE, '/tag-essays-glove')
-api.add_resource(DeprecatedResource(ClassifyNewPE), '/classifyNewPE')
-api.add_resource(DeprecatedResource(ClassifyNewPE), '/classifyPEglove')
-api.add_resource(ClassifyIBM, '/tag-ibm-fasttext')
-api.add_resource(DeprecatedResource(ClassifyIBM), '/classifyIBM')
-api.add_resource(DeprecatedResource(ClassifyIBM), '/classifyIBMfasttext')
-api.add_resource(ClassifyWD_dep, '/tag-webd-dependency')
-api.add_resource(DeprecatedResource(ClassifyWD_dep), '/classifyWD_dep')
-api.add_resource(DeprecatedResource(ClassifyWD_dep), '/classifyWDdep')
-api.add_resource(ClassifyWD, '/tag-webd-fasttext')
-api.add_resource(DeprecatedResource(ClassifyWD), '/classifyWD')
-api.add_resource(DeprecatedResource(ClassifyWD), '/classifyWDfasttext')
-api.add_resource(ClassifyNewWD, '/tag-webd-glove')
-api.add_resource(DeprecatedResource(ClassifyNewWD), '/classifyNewWD')
-api.add_resource(DeprecatedResource(ClassifyNewWD), '/classifyWDglove')
-api.add_resource(ClassifyCombo, '/tag-combined-fasttext')
-api.add_resource(DeprecatedResource(ClassifyCombo), '/classifyCombo')
+@app.route('/tag-ibm-fasttext', methods=['POST'])
+@swag_from(str(schema_dir / "tag-ibm-fasttext.yml"))
+def tag_ibm_fasttext():
+    inputtext = request.get_data().decode('UTF-8')
+    result = modelIBM.label_with_probs(inputtext)
+    response = make_response(jsonify(result))
+    response.headers['content-type'] = 'application/json'
+    return response
+
+
+@app.route('/classifyIBM', methods=['POST'])
+@app.route('/classifyIBMfasttext', methods=['POST'])
+@swag_from(str(schema_dir / "tag-ibm-fasttext-deprecated.yml"))
+def tag_ibm_fasttext_deprecated():
+    return tag_ibm_fasttext()
+
+
+@app.route('/tag-combined-fasttext', methods=['POST'])
+@swag_from(str(schema_dir / "tag-combined-fasttext.yml"))
+def tag_combined_fasttext():
+    inputtext = request.get_data().decode('UTF-8')
+    result = modelCombo.label_with_probs(inputtext)
+    response = make_response(jsonify(result))
+    response.headers['content-type'] = 'application/json'
+    return response
+
+
+@app.route('/classifyCombo', methods=['POST'])
+@swag_from(str(schema_dir / "tag-combined-fasttext-deprecated.yml"))
+def tag_combined_fasttext_deprecated():
+    return tag_combined_fasttext()
+
 
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True

@@ -1,0 +1,22 @@
+summary: Tag arguments in free input text (WebD dataset, GloVe embeddings)
+description: |
+  Tag input text with arguments using [GloVe embeddings](https://doi.org/10.3115/v1/D14-1162) pretrained on the [WebD dataset](https://doi.org/10.1162/COLI_a_00276).
+tags:
+  - Argument tagging
+consumes:
+  - text/plain
+parameters:
+  - in: body
+    name: text
+    type: string
+    required: true
+    description: Text to tag with arguments.
+    example: |
+      Quebecan independence is justified.
+      In the special episode in Japan, his system is restored by a doctor
+      who wishes to use his independence for her selfish reasons.
+responses:
+  200:
+    description: Input text sentences annotated with argument labels.
+    schema:
+      $ref: "#/definitions/Sentences"

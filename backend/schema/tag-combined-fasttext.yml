@@ -1,0 +1,22 @@
+summary: Tag arguments in free input text (combined dataset, fastText embeddings)
+description: |
+  Tag input text with arguments using the [fastText embeddings](https://aclweb.org/anthology/L18-1008) pretrained on the [Essays](https://doi.org/10.18653/v1/P17-1002), [IBM](https://aclweb.org/anthology/C18-1176), and [WebD](https://doi.org/10.1162/COLI_a_00276) datasets.
+tags:
+  - Argument tagging
+consumes:
+  - text/plain
+parameters:
+  - in: body
+    name: text
+    type: string
+    required: true
+    description: Text to tag with arguments.
+    example: |
+      Quebecan independence is justified.
+      In the special episode in Japan, his system is restored by a doctor
+      who wishes to use his independence for her selfish reasons.
+responses:
+  200:
+    description: Input text sentences annotated with argument labels.
+    schema:
+      $ref: "#/definitions/Sentences"
