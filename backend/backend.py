@@ -110,31 +110,6 @@ class ClassifyNewWD(Resource):
             description: Input text sentences annotated with argument labels.
             schema:
               $ref: "#/definitions/Sentences"
-        definitions:
-          Sentences:
-            type: array
-            items:
-              $ref: "#/definitions/Sentence"
-          Sentence:
-            type: array
-            items:
-              $ref: "#/definitions/Token"
-          Token:
-            type: object
-            required:
-              - label
-              - prob
-              - token
-            properties:
-              label:
-                type: string
-                example: "P-I"
-              prob:
-                type: number
-                example: 0.985
-              token:
-                type: string
-                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelNewWD.label(inputtext)
@@ -165,31 +140,6 @@ class ClassifyNewPE(Resource):
             description: Input text sentences annotated with argument labels.
             schema:
               $ref: "#/definitions/Sentences"
-        definitions:
-          Sentences:
-            type: array
-            items:
-              $ref: "#/definitions/Sentence"
-          Sentence:
-            type: array
-            items:
-              $ref: "#/definitions/Token"
-          Token:
-            type: object
-            required:
-              - label
-              - prob
-              - token
-            properties:
-              label:
-                type: string
-                example: "P-I"
-              prob:
-                type: number
-                example: 0.985
-              token:
-                type: string
-                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelNewES.label(inputtext)
@@ -220,31 +170,6 @@ class ClassifyES(Resource):
             description: Input text sentences annotated with argument labels.
             schema:
               $ref: "#/definitions/Sentences"
-        definitions:
-          Sentences:
-            type: array
-            items:
-              $ref: "#/definitions/Sentence"
-          Sentence:
-            type: array
-            items:
-              $ref: "#/definitions/Token"
-          Token:
-            type: object
-            required:
-              - label
-              - prob
-              - token
-            properties:
-              label:
-                type: string
-                example: "P-I"
-              prob:
-                type: number
-                example: 0.985
-              token:
-                type: string
-                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelES.label_with_probs(inputtext)
@@ -275,31 +200,6 @@ class ClassifyWD(Resource):
             description: Input text sentences annotated with argument labels.
             schema:
               $ref: "#/definitions/Sentences"
-        definitions:
-          Sentences:
-            type: array
-            items:
-              $ref: "#/definitions/Sentence"
-          Sentence:
-            type: array
-            items:
-              $ref: "#/definitions/Token"
-          Token:
-            type: object
-            required:
-              - label
-              - prob
-              - token
-            properties:
-              label:
-                type: string
-                example: "P-I"
-              prob:
-                type: number
-                example: 0.985
-              token:
-                type: string
-                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelWD.label_with_probs(inputtext)
@@ -330,31 +230,6 @@ class ClassifyES_dep(Resource):
             description: Input text sentences annotated with argument labels.
             schema:
               $ref: "#/definitions/Sentences"
-        definitions:
-          Sentences:
-            type: array
-            items:
-              $ref: "#/definitions/Sentence"
-          Sentence:
-            type: array
-            items:
-              $ref: "#/definitions/Token"
-          Token:
-            type: object
-            required:
-              - label
-              - prob
-              - token
-            properties:
-              label:
-                type: string
-                example: "P-I"
-              prob:
-                type: number
-                example: 0.985
-              token:
-                type: string
-                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelES_dep.label_with_probs(inputtext)
@@ -385,31 +260,6 @@ class ClassifyWD_dep(Resource):
             description: Input text sentences annotated with argument labels.
             schema:
               $ref: "#/definitions/Sentences"
-        definitions:
-          Sentences:
-            type: array
-            items:
-              $ref: "#/definitions/Sentence"
-          Sentence:
-            type: array
-            items:
-              $ref: "#/definitions/Token"
-          Token:
-            type: object
-            required:
-              - label
-              - prob
-              - token
-            properties:
-              label:
-                type: string
-                example: "P-I"
-              prob:
-                type: number
-                example: 0.985
-              token:
-                type: string
-                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelWD_dep.label_with_probs(inputtext)
@@ -440,31 +290,6 @@ class ClassifyIBM(Resource):
             description: Input text sentences annotated with argument labels.
             schema:
               $ref: "#/definitions/Sentences"
-        definitions:
-          Sentences:
-            type: array
-            items:
-              $ref: "#/definitions/Sentence"
-          Sentence:
-            type: array
-            items:
-              $ref: "#/definitions/Token"
-          Token:
-            type: object
-            required:
-              - label
-              - prob
-              - token
-            properties:
-              label:
-                type: string
-                example: "P-I"
-              prob:
-                type: number
-                example: 0.985
-              token:
-                type: string
-                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelIBM.label_with_probs(inputtext)
@@ -495,31 +320,6 @@ class ClassifyCombo(Resource):
             description: Input text sentences annotated with argument labels.
             schema:
               $ref: "#/definitions/Sentences"
-        definitions:
-          Sentences:
-            type: array
-            items:
-              $ref: "#/definitions/Sentence"
-          Sentence:
-            type: array
-            items:
-              $ref: "#/definitions/Token"
-          Token:
-            type: object
-            required:
-              - label
-              - prob
-              - token
-            properties:
-              label:
-                type: string
-                example: "P-I"
-              prob:
-                type: number
-                example: 0.985
-              token:
-                type: string
-                example: "system"
         """
         inputtext = request.get_data().decode('UTF-8')
         result = modelCombo.label_with_probs(inputtext)
@@ -558,31 +358,6 @@ class DeprecatedResource(Resource):
             description: Input text sentences annotated with argument labels.
             schema:
               $ref: "#/definitions/Sentences"
-        definitions:
-          Sentences:
-            type: array
-            items:
-              $ref: "#/definitions/Sentence"
-          Sentence:
-            type: array
-            items:
-              $ref: "#/definitions/Token"
-          Token:
-            type: object
-            required:
-              - label
-              - prob
-              - token
-            properties:
-              label:
-                type: string
-                example: "P-I"
-              prob:
-                type: number
-                example: 0.985
-              token:
-                type: string
-                example: "system"
         """
         return self.resource.post()
 
