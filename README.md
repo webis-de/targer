@@ -74,7 +74,6 @@ Here you can find more detailed documentation of the system architecture, instal
 
 ## License
 
-The TARGER source code after the [fork](https://github.com/webis-de/targer/commit/522af7f0a11ecb608374f865b714c3bb73a9cfdf) off [uhh-lt/targer](https://github.com/uhh-lt/targer) is released under the [MIT license](LICENSE).
-Once [uhh-lt/targer#52](https://github.com/uhh-lt/targer/pull/52) is merged, the complete repo can be licensed freely.
+This repository is released under the  the [MIT license](LICENSE).
 
-Parts of the frontend source code are based on [displacy-ent](https://github.com/explosion/displacy-ent) which is licensed under the MIT license. 
+Code in this repository is based on [uhh-lt/targer](https://github.com/uhh-lt/targer) and parts of the frontend are based on [displacy-ent](https://github.com/explosion/displacy-ent), both are licensed under the MIT license. 
