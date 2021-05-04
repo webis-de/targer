@@ -5,20 +5,21 @@
 frontend:
 #  url: https://demo.webis.de/targer/
   port: 30294
-  image: webis/targer-frontend:0.1.12
+  image: webis/targer-frontend:0.1.13
   replicas: 3
 
 backend:
   url: https://demo.webis.de/targer-api/
   port: 30293
   root: /targer-api
-  image: webis/targer-backend:0.1.12
+  image: webis/targer-backend:0.1.13
   replicas: 3
   # Paths of models on each host's file system.
   modelsPath: /mnt/ceph/storage/data-in-production/data-research/acqua/targer/models/
 
 elasticsearch:
-  host: elasticsearch.bw.webis.de
+#  host: elasticsearch.bw.webis.de
+  host: betaweb020.bw.webis.de
   port: 9200
   username: "" # Override username with `--set elasticsearch.username=EXAMPLE` Helm option.
   password: "" # Override username with `--set elasticsearch.password=EXAMPLE` Helm option.

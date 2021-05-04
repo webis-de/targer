@@ -2,7 +2,7 @@ swagger: "2.0"
 paths: {} # Will be filled by Flasgger.
 info:
   title: TARGER API
-  version: 0.1.12
+  version: 0.1.13
   description: |
     Demo API for our [ACL 2019 paper](https://doi.org/10.18653/v1/P19-3031):
     _TARGER: Neural Argument Mining at Your Fingertips_
