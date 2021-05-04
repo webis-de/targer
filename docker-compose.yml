@@ -1,16 +1,14 @@
 version: "2"
 services:
   frontend:
-    image: webis/targer-frontend:0.1.10
+    image: webis/targer-frontend:0.1.13
     ports:
       - 6001:6001
   backend:
-    image: webis/targer-backend:0.1.10
+    image: webis/targer-backend:0.1.13
     ports:
       - 6000:6000
     volumes:
       - ./models/:/emnlp2017-bilstm-cnn-crf/models/
     mem_limit: 8gb
     mem_reservation: 8gb
-
-
