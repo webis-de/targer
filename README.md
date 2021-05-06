@@ -71,6 +71,7 @@ Here you can find more detailed documentation of the system architecture, instal
 * [System architecture](documentation/system-architecture.md)
 * [Installation guide](documentation/installation-guide.md)
 * [User guide](documentation/user-guide.md)
+* [Deployment with Helm](helm/README.md)
 
 ## License
 
