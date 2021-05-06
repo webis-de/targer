@@ -207,62 +207,124 @@ SEARCH_KEY_ENTITY = 'named_entity'
 SEARCH_KEY_TEXT = 'text'
 
 
-def get_search_field(path, field, query):
-    return {"nested": {
-        "path": path,
-        "query": {
-            "bool": {
-                "must": [{"match": {field: {"query": query}}}]
+def get_search_field(field, query):
+    return {
+        "match": {
+            field: {
+                "query": query
             }
-        },
-        "inner_hits": {}
-    }}
+        }
+    }
 
 
-def get_search_field_with_score(path, field, query, score_field, score):
-    return {"nested": {
-        "path": path,
-        "query": {
-            "bool": {
-                "must": [{"match": {field: {"query": query}}},
-                         {"range": {score_field: {"gt": score}}}]
+def get_nested_search_field(path, field, query):
+    return {
+        "nested": {
+            "path": path,
+            "query": {
+                "match": {
+                    field: {
+                        "query": query
+                    }
+                }
+            },
+        }
+    }
+
+
+def get_nested_search_field_with_score(path, field, query, score_field, score):
+    return {
+        "nested": {
+            "path": path,
+            "query": {
+                "bool": {
+                    "must": {
+                        "match": {
+                            field: {
+                                "query": query
+                            }
+                        }
+                    },
+                    "filter": {
+                        "range": {
+                            score_field: {
+                                "gt": score
+                            }
+                        }
+                    }
+                }
             }
-        },
-        "inner_hits": {}
-    }}
+        }
+    }
+
+
+def get_search_element(category, query, confidence):
+    if category == SEARCH_KEY_TEXT:
+        return get_search_field("sentences.text", query)
+    elif category == SEARCH_KEY_PREMISE:
+        return get_nested_search_field_with_score(
+            "sentences.premises",
+            "sentences.premises.text",
+            query,
+            "sentences.premises.score",
+            float(confidence) / 100
+        )
+    elif category == SEARCH_KEY_CLAIM:
+        return get_nested_search_field_with_score(
+            "sentences.claims",
+            "sentences.claims.text",
+            query,
+            "sentences.claims.score",
+            float(confidence) / 100
+        )
+    elif category == SEARCH_KEY_ENTITY:
+        get_nested_search_field("sentences.entities", "sentences.entities.text", query)
 
 
 number_of_sentences_around = 3
 
 
-def search_in_es(query, where_to_seach, confidence):
+def search_in_es(query, where_to_search, confidence):
     docs = []
-    search_query = query[:100]
+    search_query = query
 
-    search_elements = []
-    for search_category in where_to_seach:
-        if search_category == SEARCH_KEY_TEXT:
-            search_elements.append(get_search_field("sentences", "sentences.text", search_query))
-        if search_category == SEARCH_KEY_PREMISE:
-            search_elements.append(
-                get_search_field_with_score("sentences.premises", "sentences.premises.text", search_query,
-                                            "sentences.premises.score", float(confidence) / 100))
-        if search_category == SEARCH_KEY_CLAIM:
-            search_elements.append(
-                get_search_field_with_score("sentences.claims", "sentences.claims.text", search_query,
-                                            "sentences.claims.score", float(confidence) / 100))
-        if search_category == SEARCH_KEY_ENTITY:
-            search_elements.append(get_search_field("sentences.entities", "sentences.entities.text", search_query))
+    if len(where_to_search) == 0:
+        where_to_search = [SEARCH_KEY_TEXT]
+    where_to_search = set(where_to_search)
+    search_elements = [
+        get_search_element(search_category, search_query, confidence)
+        for search_category in where_to_search
+    ]
 
     if len(search_elements) == 0:
-        search_elements.append(get_search_field("sentences", "sentences.text", search_query))
+        search_elements.append(get_search_field("sentences.text", search_query))
 
     body = {
-        "from": 0,
         "size": 25,
+        "_source": {
+            "includes": [
+                "url",
+                "sentences.text",
+                "sentences.claims.score",
+                "sentences.claims.text",
+                "sentences.premises.score",
+                "sentences.premises.text",
+                "sentences.entities.class",
+                "sentences.entities.text"
+            ]
+        },
         "query": {
-            "bool": {
-                "should": search_elements
+            "nested": {
+                "inner_hits": {
+                    "_source": False,
+                    "size": 1
+                },
+                "path": "sentences",
+                "query": {
+                    "bool": {
+                        "should": search_elements
+                    }
+                }
             }
         }
     }
@@ -275,111 +337,111 @@ def search_in_es(query, where_to_seach, confidence):
     )
 
     query_words = search_query.strip().split()
-    # print("Got {}{} Hits:".format(
-    #     "≥" if res["hits"]["total"]["relation"] == "gte" else "",
-    #     res['hits']['total']['value']), file=sys.stderr)
+    app.logger.debug(
+        "Got %s%s Hits:",
+        "≥" if res["hits"]["total"]["relation"] == "gte" else "",
+        res['hits']['total']['value']
+    )
+    app.logger.debug('%s returned hits', len(res['hits']['hits']))
+
     for hit in res['hits']['hits']:
-        try:
-            doc = {}
-            text_full = ""
-            arguments_positions = []
-            entity_positions = []
-            query_search_positions = []
+        doc = {}
+        text_full = ""
+        arguments_positions = []
+        entity_positions = []
+        query_search_positions = []
 
-            sentences = hit["_source"]["sentences"]
+        sentences = hit["_source"]["sentences"]
 
-            field = "sentences"
-            if SEARCH_KEY_PREMISE in where_to_seach and \
-                    hit["inner_hits"]["sentences.premises"]["hits"]["total"] > 0:
-                field = "sentences.premises"
-            elif SEARCH_KEY_CLAIM in where_to_seach and \
-                    hit["inner_hits"]["sentences.claims"]["hits"]["total"] > 0:
-                field = "sentences.claims"
-            elif SEARCH_KEY_ENTITY in where_to_seach and \
-                    hit["inner_hits"]["sentences.entities"]["hits"]["total"] > 0:
-                field = "sentences.entities"
+        index_with_top_match = hit["inner_hits"]["sentences"]["hits"]["hits"][0]["_nested"]["offset"]
 
-            index_with_top_match = hit["inner_hits"][field]["hits"]["hits"][0]["_nested"]["offset"]
+        # finding for sentences indexes to show
+        if index_with_top_match is None:
+            # first sentences
+            min_pos = 0
+            max_pos = number_of_sentences_around * 2
+        elif len(sentences) < 2 * number_of_sentences_around + 1:
+            # all sentences
+            min_pos = 0
+            max_pos = len(sentences) - 1
+        elif index_with_top_match < number_of_sentences_around:
+            # first sentences
+            min_pos = 0
+            max_pos = number_of_sentences_around * 2
+        elif index_with_top_match > (len(sentences) - 1 - number_of_sentences_around):
+            # last sentences
+            min_pos = len(sentences) - 1 - (number_of_sentences_around * 2) - 1
+            max_pos = len(sentences) - 1
+        else:
+            # surrounding sentences
+            min_pos = index_with_top_match - number_of_sentences_around
+            max_pos = index_with_top_match + number_of_sentences_around
 
-            # finding for sentences indexes to show
-            if len(sentences) < 2 * number_of_sentences_around + 1:
-                min_pos = 0
-                max_pos = len(sentences) - 1
-            elif index_with_top_match < number_of_sentences_around:
-                min_pos = 0
-                max_pos = number_of_sentences_around * 2
-            elif index_with_top_match > (len(sentences) - (number_of_sentences_around * 2 + 2)):
-                min_pos = (len(sentences) - (number_of_sentences_around * 2 + 2))
-                max_pos = (len(sentences) - 1)
-            elif index_with_top_match is not None:
-                min_pos = index_with_top_match - number_of_sentences_around
-                max_pos = index_with_top_match + number_of_sentences_around
-            else:
-                min_pos = 0
-                max_pos = number_of_sentences_around * 2
+        for sentence_index in range(min_pos, max_pos + 1):
 
-            for sentence_index in range(min_pos, max_pos + 1):
+            sentence = sentences[sentence_index]
+            offset = len(text_full)
+            sentence_text_adjusted = adjust_punctuation(sentence['text'])
+            text_full += sentence_text_adjusted + " "
 
-                sentence = sentences[sentence_index]
-                offset = len(text_full)
-                sentence_text_adjusted = adjust_punctuation(sentence['text'])
-                text_full += sentence_text_adjusted + " "
+            # finding positions for claims
+            if SEARCH_KEY_CLAIM in where_to_search:
+                sentence.setdefault("claims", [])
+                for claim in sentence["claims"]:
+                    if float(claim["score"]) > float(confidence) / 100:
+                        claim_adjusted = adjust_punctuation(claim["text"])
+                        start_pos = sentence_text_adjusted.find(claim_adjusted)
+                        end_pos = start_pos + len(claim_adjusted)
+                        arguments_positions.append(
+                            {"type": "claim", "start": offset + start_pos, "end": offset + end_pos})
 
-                # finding positions for claims
-                if SEARCH_KEY_CLAIM in where_to_seach:
-                    for claim in sentence["claims"]:
-                        if float(claim["score"]) > float(confidence) / 100:
-                            claim_adjusted = adjust_punctuation(claim["text"])
-                            start_pos = sentence_text_adjusted.find(claim_adjusted)
-                            end_pos = start_pos + len(claim_adjusted)
-                            arguments_positions.append(
-                                {"type": "claim", "start": offset + start_pos, "end": offset + end_pos})
+            # finding positions for premises
+            if SEARCH_KEY_PREMISE in where_to_search:
+                sentence.setdefault("premises", [])
+                for premise in sentence["premises"]:
+                    if float(premise["score"]) > float(confidence) / 100:
+                        premise_adjusted = adjust_punctuation(premise["text"])
+                        start_pos = sentence_text_adjusted.find(premise_adjusted)
+                        end_pos = start_pos + len(premise_adjusted)
+                        arguments_positions.append(
+                            {"type": "premise", "start": offset + start_pos, "end": offset + end_pos})
 
-                # finding positions for premises
-                if SEARCH_KEY_PREMISE in where_to_seach:
-                    for premise in sentence["premises"]:
-                        if float(premise["score"]) > float(confidence) / 100:
-                            premise_adjusted = adjust_punctuation(premise["text"])
-                            start_pos = sentence_text_adjusted.find(premise_adjusted)
-                            end_pos = start_pos + len(premise_adjusted)
-                            arguments_positions.append(
-                                {"type": "premise", "start": offset + start_pos, "end": offset + end_pos})
+            # finding positions for entities
+            if SEARCH_KEY_ENTITY in where_to_search:
+                sentence.setdefault("entities", [])
+                for entity in sentence["entities"]:
+                    if entity["class"].upper() == "ORGANIZATION":
+                        type = "ORG"
+                    elif entity["class"].upper() == "LOCATION":
+                        type = "LOC"
+                    else:
+                        type = entity["class"]
+                    text = adjust_punctuation(entity["text"])
+                    start_pos = sentence_text_adjusted.find(text)
+                    end_pos = start_pos + len(text)
+                    entity_positions.append({
+                        "type": type,
+                        "start": offset + start_pos,
+                        "end": offset + end_pos
+                    })
 
-                # finding positions for entities
-                if SEARCH_KEY_ENTITY in where_to_seach:
-                    for entity in sentence["entities"]:
-                        if entity["class"].upper() == "ORGANIZATION":
-                            type = "ORG"
-                        elif entity["class"].upper() == "LOCATION":
-                            type = "LOC"
-                        else:
-                            type = entity["class"]
-                        text = adjust_punctuation(entity["text"])
-                        start_pos = sentence_text_adjusted.find(text)
-                        end_pos = start_pos + len(text)
-                        entity_positions.append({
-                            "type": type,
-                            "start": offset + start_pos,
-                            "end": offset + end_pos
-                        })
+        # finding positions for search query instances
+        for word in query_words:
+            for match in set(re.findall(word, text_full, re.IGNORECASE)):
+                positions = [
+                    {"type": "search", "start": m.start(), "end": m.end()}
+                    for m in re.finditer(match, text_full)
+                ]
+                query_search_positions.extend(positions)
 
-            # finding positions for search query instances
-            for word in query_words:
-                for match in set(re.findall(word, text_full, re.IGNORECASE)):
-                    positions = [
-                        {"type": "search", "start": m.start(), "end": m.end()}
-                        for m in re.finditer(match, text_full)
-                    ]
-                    query_search_positions.extend(positions)
+        app.logger.debug('Full text: %s', text_full)
 
-            doc["text_full"] = text_full
-            doc["query_positions"] = query_search_positions
-            doc["arguments_positions"] = arguments_positions
-            doc["entity_positions"] = entity_positions
-            doc["url"] = hit["_source"]["url"]
-            docs.append(doc)
-        except:
-            print("Unexpected error:", sys.exc_info()[0])
+        doc["text_full"] = text_full
+        doc["query_positions"] = query_search_positions
+        doc["arguments_positions"] = arguments_positions
+        doc["entity_positions"] = entity_positions
+        doc["url"] = hit["_source"]["url"]
+        docs.append(doc)
 
     return json.dumps(docs)
 
