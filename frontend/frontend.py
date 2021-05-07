@@ -1,25 +1,19 @@
 #!/usr/bin/env python3
 
 """be.py: Description."""
-from flask import Flask, request
-from flasgger import Swagger, LazyString, LazyJSONEncoder
-from flask_restful import Api
-import json
-import sys
 import configparser
-import urllib.parse
-
-"""Front-End"""
-from flask import render_template
-from json import JSONDecodeError
-import requests
-import os
-from elasticsearch import Elasticsearch
-import re
 import json
+import os
+import re
+from json import JSONDecodeError
 
-"""Spacy"""
+import requests
 import spacy
+from elasticsearch import Elasticsearch
+from flasgger import Swagger, LazyString, LazyJSONEncoder
+from flask import Flask, request
+from flask import render_template
+from flask_restful import Api
 
 nlp = spacy.load('xx')
 
@@ -29,8 +23,8 @@ config = config_parser['frontend']
 
 
 class ReverseProxied(object):
-    def __init__(self, app):
-        self.app = app
+    def __init__(self, flask_app):
+        self.app = flask_app
 
     def __call__(self, environ, start_response):
         script_name = environ.get('HTTP_X_SCRIPT_NAME', '')
@@ -65,9 +59,9 @@ es = Elasticsearch(
     use_ssl=auth is not None,
 )
 
-reversed = True
+reverse_proxy = True
 
-if (reversed):
+if reverse_proxy:
     app.wsgi_app = ReverseProxied(app.wsgi_app)
     template2 = dict(swaggerUiPrefix=LazyString(lambda: request.environ.get('HTTP_X_SCRIPT_NAME', '')))
     swagger = Swagger(app, template=template2)
@@ -103,6 +97,8 @@ class Sender:
             url = create_api_url("/tag-webd-glove")
         elif classifier == "Combo":
             url = create_api_url("/tag-combined-fasttext")
+        else:
+            raise NotImplementedError("Unknown tagger.")
 
         try:
             r = requests.post(url, data=text.encode("utf-8"))
@@ -117,6 +113,7 @@ sender = Sender()
 
 @app.route('/')
 def index():
+    # noinspection PyUnresolvedReferences
     return render_template('template_main.html', title="Argument Entity Visualizer", page="index",
                            api_url=config["api_url"], source_url=config["source_url"], paper_doi=config["paper_doi"])
 
@@ -291,17 +288,22 @@ def background_process_arg():
             start = text.find(token["token"], currentPos)
             end = start + len(token["token"])
             currentPos = end
-            currentWord = {}
-            currentWord['start'] = start
-            currentWord['end'] = end
-            currentWord['type'] = token["label"]
+            currentWord = {
+                'start': start,
+                'end': end,
+                'type': token["label"],
+            }
             data.append(currentWord)
 
     data = do_label_arg(data)
 
     doc = nlp(text)
     for ent in doc.ents:
-        entry = {'start': ent.start_char, 'end': ent.end_char, 'type': ent.label_}
+        entry = {
+            'start': ent.start_char,
+            'end': ent.end_char,
+            'type': ent.label_
+        }
         data.append(entry)
 
     return json.dumps(data)
@@ -309,6 +311,7 @@ def background_process_arg():
 
 def do_label_arg(marks):
     # print("marks:" + str(marks))
+    mark = {}
     marks_new = []
     for i, item in enumerate(marks):
         # for (var i = 0; i < marks.length; i++):
@@ -331,7 +334,7 @@ def do_label_arg(marks):
             if marks[i]['type'][0] == "P":
                 mark = {'type': "PREMISE", 'start': marks[i]['start']}
                 marks_new.append(mark)
-            elif (marks[i]['type'][0] == "C"):
+            elif marks[i]['type'][0] == "C":
                 mark = {'type': "CLAIM", 'start': marks[i]['start']}
                 marks_new.append(mark)
             # End Label
@@ -558,16 +561,16 @@ def search_in_es(query, where_to_search, confidence):
                 sentence.setdefault("entities", [])
                 for entity in sentence["entities"]:
                     if entity["class"].upper() == "ORGANIZATION":
-                        type = "ORG"
+                        tag_type = "ORG"
                     elif entity["class"].upper() == "LOCATION":
-                        type = "LOC"
+                        tag_type = "LOC"
                     else:
-                        type = entity["class"]
+                        tag_type = entity["class"]
                     text = adjust_punctuation(entity["text"])
                     start_pos = sentence_text_adjusted.find(text)
                     end_pos = start_pos + len(text)
                     entity_positions.append({
-                        "type": type,
+                        "type": tag_type,
                         "start": offset + start_pos,
                         "end": offset + end_pos
                     })
