@@ -148,7 +148,7 @@ function search_action() {
             var err = textStatus + ", " + error;
             console.log("Request Failed: " + err);
             var h = document.createElement("h4")                // Create a <h2> element
-            var t = document.createTextNode("We're sorry! 😥 We were slower than you, please try again.");     // Create a text node
+            var t = document.createTextNode("We're sorry! 😥 The search request failed, please try again.");     // Create a text node
             h.appendChild(t);
             $("#displacy").empty();
             $("#displacy").append(h);                                   // Append the text to <h2>
