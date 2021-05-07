@@ -282,18 +282,18 @@ def background_process_arg():
     # Arg-Mining Tags
     classifier = request.form.get('classifier')
     doc = sender.send(text, classifier)
-    currentPos = 0
+    current_pos = 0
     for sentence in doc:
         for token in sentence:
-            start = text.find(token["token"], currentPos)
+            start = text.find(token["token"], current_pos)
             end = start + len(token["token"])
-            currentPos = end
-            currentWord = {
+            current_pos = end
+            current_word = {
                 'start': start,
                 'end': end,
                 'type': token["label"],
             }
-            data.append(currentWord)
+            data.append(current_word)
 
     data = do_label_arg(data)
 
