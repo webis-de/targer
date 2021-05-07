@@ -123,15 +123,162 @@ def index():
 
 @app.route('/search_text', methods=['POST'])
 def search_text():
-    text = request.form.get('username')
-    confidence = request.form.get('confidence')
-    where_to_seach = request.form.getlist('where[]')  # List like ['premise', 'claim', 'named_entity', 'text']
+    """
+    Search arguments by keywords.
+    ---
+    parameters:
+      - name: query
+        in: formData
+        type: string
+        required: true
+        default: death penalty
+      - name: confidence
+        in: formData
+        type: integer
+        minimum: 0
+        maximum: 100
+        default: 90
+      - name: where
+        in: formData
+        type: array
+        items:
+          type: string
+          minItems: 1
+          uniqueItems: true
+          enum:
+          - text
+          - premise
+          - claim
+          - named_entity
+        default:
+        - text
+        - premise
+        - claim
+        - named_entity
+    responses:
+      200:
+        description: Search snippets annotated with argument labels.
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              text_full:
+                type: string
+              query_positions:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - search
+                  start:
+                    type: integer
+                    minimum: 0
+                  end:
+                    type: integer
+                    minimum: 0
+              entity_positions:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  start:
+                    type: integer
+                    minimum: 0
+                  end:
+                    type: integer
+                    minimum: 0
+              arguments_positions:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - premise
+                    - claim
+                  start:
+                    type: integer
+                    minimum: 0
+                  end:
+                    type: integer
+                    minimum: 0
+              url:
+                type: string
+
+
+
+    """
+    text = request.form.get('query')
+    confidence = request.form.get('confidence', default=0)
+    where_to_seach = request.form.get('where').split(",")  # List like ['premise', 'claim', 'named_entity', 'text']
     return search_in_es(text, where_to_seach, confidence)
 
 
 @app.route('/label_text', methods=['POST'])
 def background_process_arg():
-    text = request.form.get('username')
+    """
+    Tag arguments in free input text.
+    ---
+    parameters:
+      - in: formData
+        name: text
+        type: string
+        default: |
+          Quebecan independence is justified. In the special episode in Japan,
+          his system is restored by a doctor who wishes to use his independence for her selfish reasons.
+      - name: classifier
+        in: formData
+        type: string
+        enum:
+        - IBM
+        - ES_dep
+        - ES
+        - NEWPE
+        - WD_dep
+        - WD
+        - NEWWD
+        - Combo
+    responses:
+      200:
+        description: Tags with position and type.
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                - CLAIM
+                - PREMISE
+                - PERSON
+                - PER
+                - NORP
+                - FACILITY
+                - ORG
+                - GPE
+                - LOC
+                - PRODUCT
+                - EVENT
+                - WORK OF ART
+                - LANGUAGE
+                - DATE
+                - TIME
+                - PERCENT
+                - MONEY
+                - QUANTITY
+                - ORDINAL
+                - CARDINAL
+                - MISC
+              start:
+                type: integer
+                minimum: 0
+              end:
+                type: integer
+                minimum: 0
+    """
+    text = request.form.get('text')
 
     data = []
 

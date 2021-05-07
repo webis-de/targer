@@ -69,8 +69,8 @@ function search_action() {
     document.getElementById("button_search").disabled = true;
     console.log(selected_fields)
     $.post("./search_text", {
-        username: document.getElementById("searchArgumentsInput").value,
-        where: selected_fields,
+        query: document.getElementById("searchArgumentsInput").value,
+        where: selected_fields.join(","),
         confidence: $(".js-range-slider").val()
     })
         .done(function (data) {
@@ -163,7 +163,7 @@ function label_action() {
     document.getElementById("button_label").disabled = true;
 
     $.post("./label_text", {
-        username: document.getElementById("labelTextInput").value,
+        text: document.getElementById("labelTextInput").value,
         classifier: document.getElementById("model").value
     })
         .done(function (data) {
