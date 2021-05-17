@@ -61,6 +61,8 @@ For detailed documentation about the tagging library refer to [its repository](h
     ```shell script
     docker-compose up
     ```
+   
+1. To enable the search tab, change `es_host`, `es_port`, and `es_index` in [`config.ini`](frontend/config.ini) to your cluster and index.
 
 1. Access the frontend at [localhost:6001](http://localhost:6001) and the backend REST-like API at [localhost:6000](http://localhost:6000).
 
