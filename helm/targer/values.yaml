@@ -21,8 +21,7 @@ backend:
   servicePort: 6000 # Internal service port, not exposed outside Kubernetes.
 
 elasticsearch:
-#  host: elasticsearch.bw.webis.de
-  host: betaweb020.bw.webis.de
+  host: elasticsearch.bw.webis.de
   port: 9200
   username: "" # Override username with `--set elasticsearch.username=EXAMPLE` Helm option.
   password: "" # Override username with `--set elasticsearch.password=EXAMPLE` Helm option.
