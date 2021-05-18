@@ -12,6 +12,7 @@ spec:
     matchLabels:
       app: {{ $.Release.Name }}-frontend
   replicas: {{ $.Values.frontend.replicas }}
+  revisionHistoryLimit: 2 # Keep 2 old replica sets for rollback.
   template:
     metadata:
       annotations:
