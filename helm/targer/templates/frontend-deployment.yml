@@ -23,7 +23,7 @@ spec:
       containers:
       - name: {{ $.Release.Name }}-frontend
         image: {{ $.Values.frontend.image }}
-        {{ if and $.Values.elasticsearch.username $.Values.elasticsearch.password }}
+        {{- if and $.Values.elasticsearch.username $.Values.elasticsearch.password }}
         env:
           - name: ES_USERNAME
             valueFrom:
@@ -35,7 +35,7 @@ spec:
               secretKeyRef:
                 name: {{ $.Release.Name }}-elasticsearch-login
                 key: password
-        {{ end }}
+        {{- end }}
         volumeMounts:
         - name: {{ $.Release.Name }}-frontend-config
           mountPath: /config.ini
