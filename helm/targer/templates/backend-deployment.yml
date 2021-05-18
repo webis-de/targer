@@ -22,7 +22,7 @@ spec:
         image: {{ $.Values.backend.image }}
         resources:
           requests:
-            memory: 15Gi
+            memory: 16Gi
         volumeMounts:
         - mountPath: /emnlp2017-bilstm-cnn-crf/models/
           name: {{ $.Release.Name }}-backend-models
