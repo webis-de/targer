@@ -5,12 +5,14 @@ metadata:
   {{- with $.Values.namespace }}
   namespace: {{ . }}
   {{- end }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - host: {{ $.Values.frontend.host }}
       http:
         paths:
-          - path: {{ $.Values.frontend.path }}
+          - path: {{ $.Values.frontend.path }}(/|$)(.*)
             backend:
               serviceName: {{ $.Release.Name }}-frontend
               servicePort: {{ $.Values.frontend.servicePort }}
