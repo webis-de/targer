@@ -9,11 +9,11 @@ data:
   config.ini: |
     [frontend]
     host = 0.0.0.0
-    port = 6001
-    api_endpoint = {{ .Values.backend.url }}
-    es_host = {{ .Values.elasticsearch.host }}
-    es_port = {{ .Values.elasticsearch.port }}
-    es_index = {{ .Values.elasticsearch.index }}
-    source_url = {{ .Values.info.sourceUrl }}
-    api_url = {{ .Values.backend.url }}apidocs/
-    paper_doi = {{ .Values.info.paperDoi }}
+    port = {{ $.Values.frontend.servicePort }}
+    api_endpoint = https://{{ $.Values.backend.host }}{{ $.Values.backend.path }}
+    es_host = {{ $.Values.elasticsearch.host }}
+    es_port = {{ $.Values.elasticsearch.port }}
+    es_index = {{ $.Values.elasticsearch.index }}
+    source_url = {{ $.Values.info.sourceUrl }}
+    api_url = https://{{ $.Values.backend.host }}{{ $.Values.backend.path }}/apidocs
+    paper_doi = {{ $.Values.info.paperDoi }}

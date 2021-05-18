@@ -8,7 +8,6 @@ metadata:
   labels:
     app: {{ $.Release.Name }}-backend
 spec:
-  type: NodePort
   selector:
     app: {{ $.Release.Name }}-backend
   ports:

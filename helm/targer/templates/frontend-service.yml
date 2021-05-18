@@ -8,7 +8,6 @@ metadata:
   labels:
     app: {{ $.Release.Name }}-frontend
 spec:
-  type: NodePort
   selector:
     app: {{ $.Release.Name }}-frontend
   ports:

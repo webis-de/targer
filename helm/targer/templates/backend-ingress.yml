@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $.Release.Name }}-backend
+  {{- with $.Values.namespace }}
+  namespace: {{ . }}
+  {{- end }}
+spec:
+  rules:
+    - host: {{ $.Values.backend.host }}
+      http:
+        paths:
+          - path: {{ $.Values.backend.path }}
+            backend:
+              serviceName: {{ $.Release.Name }}-backend
+              servicePort: {{ $.Values.backend.servicePort }}
+{{/*
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $.Release.Name }}-backend
+  {{- with $.Values.namespace }}
+  namespace: {{ . }}
+  {{- end }}
+spec:
+  rules:
+    - host: {{ $.Values.backend.host }}
+      http:
+        paths:
+          - path: {{ $.Values.backend.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $.Release.Name }}-backend
+                port:
+                  number: {{ $.Values.backend.servicePort }}
+*/}}

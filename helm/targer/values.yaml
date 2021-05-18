@@ -5,17 +5,16 @@
 namespace: services-targer
 
 frontend:
-#  url: https://demo.webis.de/targer/
-  port: 30294
   image: webis/targer-frontend:1.0.0
+  host: demo.webis.de
+  path: /targer
   replicas: 3
   servicePort: 6001 # Internal service port, not exposed outside Kubernetes.
 
 backend:
-  url: https://demo.webis.de/targer-api/
-  port: 30293
-  root: /targer-api
   image: webis/targer-backend:1.0.0
+  host: demo.webis.de
+  path: /targer-api
   replicas: 3
   # Paths of models on each host's file system.
   modelsPath: /mnt/ceph/storage/data-in-production/data-research/acqua/targer/models/
