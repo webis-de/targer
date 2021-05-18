@@ -34,6 +34,18 @@ spec:
         - name: {{ .Release.Name }}-frontend-config
           mountPath: /config.ini
           subPath: config.ini
+        startupProbe:
+          httpGet:
+            port: {{ $.Values.backend.servicePort }}
+            path: /apidocs/
+          periodSeconds: 10
+          failureThreshold: 30
+        livenessProbe:
+          httpGet:
+            port: {{ $.Values.backend.servicePort }}
+            path: /apidocs/
+          periodSeconds: 10
+          failureThreshold: 3
       restartPolicy: Always
       volumes:
       - name: {{ .Release.Name }}-frontend-config

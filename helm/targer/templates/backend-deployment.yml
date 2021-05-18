@@ -27,6 +27,18 @@ spec:
         - name: {{ .Release.Name }}-backend-config
           mountPath: /emnlp2017-bilstm-cnn-crf/config.ini
           subPath: config.ini
+        startupProbe:
+          httpGet:
+            port: {{ $.Values.backend.servicePort }}
+            path: /apidocs/
+          periodSeconds: 10
+          failureThreshold: 60
+        livenessProbe:
+          httpGet:
+            port: {{ $.Values.backend.servicePort }}
+            path: /apidocs/
+          periodSeconds: 10
+          failureThreshold: 3
       restartPolicy: Always
       volumes:
       - name: {{ .Release.Name }}-backend-models
