@@ -12,5 +12,3 @@ spec:
     app: {{ $.Release.Name }}-backend
   ports:
   - port: {{ $.Values.backend.servicePort }}
-    protocol: TCP
-    targetPort: {{ $.Values.backend.servicePort }}
