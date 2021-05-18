@@ -39,6 +39,7 @@ spec:
         volumeMounts:
         - name: {{ $.Release.Name }}-frontend-config
           mountPath: /config.ini
+          readOnly: true
           subPath: config.ini
         {{/*
         startupProbe:
