@@ -42,7 +42,7 @@ spec:
           timeoutSeconds: 5
           failureThreshold: 30 # Wait 30*10 = 300 seconds to load models and to start webserver.
         */}}
-        livenessProbe:
+        readinessProbe:
           httpGet:
             port: {{ $.Values.backend.servicePort }}
             path: /apidocs/
@@ -50,6 +50,14 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 5
           failureThreshold: 6
+        livenessProbe:
+          httpGet:
+            port: {{ $.Values.backend.servicePort }}
+            path: /apidocs/
+          initialDelaySeconds: 300 # Wait 300 seconds to load models and to start webserver.
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 12
       restartPolicy: Always
       volumes:
       - name: {{ $.Release.Name }}-backend-models

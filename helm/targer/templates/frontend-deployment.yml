@@ -50,7 +50,7 @@ spec:
           timeoutSeconds: 5
           failureThreshold: 6 # Wait 6*10 = 600 seconds to start webserver.
         */}}
-        livenessProbe:
+        readinessProbe:
           httpGet:
             port: {{ $.Values.frontend.servicePort }}
             path: /apidocs/
@@ -58,6 +58,14 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 5
           failureThreshold: 6
+        livenessProbe:
+          httpGet:
+            port: {{ $.Values.frontend.servicePort }}
+            path: /apidocs/
+          initialDelaySeconds: 60 # Wait 60 seconds to start webserver.
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 12
       restartPolicy: Always
       volumes:
       - name: {{ $.Release.Name }}-frontend-config
