@@ -25,7 +25,7 @@ elasticsearch:
   port: 9200
   username: "" # Override username with `--set elasticsearch.username=EXAMPLE` Helm option.
   password: "" # Override username with `--set elasticsearch.password=EXAMPLE` Helm option.
-  index: args
+  index: targer_index_arguments
 
 info:
   sourceUrl: https://github.com/webis-de/targer
