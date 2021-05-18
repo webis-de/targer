@@ -44,14 +44,17 @@ spec:
           httpGet:
             port: {{ $.Values.backend.servicePort }}
             path: /apidocs/
+          initialDelaySeconds: 30 # Wait 30 seconds to start webserver.
           periodSeconds: 10
+          timeoutSeconds: 5
           failureThreshold: 30
         livenessProbe:
           httpGet:
             port: {{ $.Values.backend.servicePort }}
             path: /apidocs/
           periodSeconds: 10
-          failureThreshold: 3
+          timeoutSeconds: 5
+          failureThreshold: 6
       restartPolicy: Always
       volumes:
       - name: {{ $.Release.Name }}-frontend-config
