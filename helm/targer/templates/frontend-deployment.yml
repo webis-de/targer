@@ -14,6 +14,9 @@ spec:
   replicas: {{ $.Values.frontend.replicas }}
   template:
     metadata:
+      annotations:
+        checksum/frontend-config-map: {{ include (print $.Template.BasePath "/frontend-config-map.yml") . | sha256sum }}
+        checksum/elasticsearch-login: {{ include (print $.Template.BasePath "/elasticsearch-login.yml") . | sha256sum }}
       labels:
         app: {{ $.Release.Name }}-frontend
     spec:
