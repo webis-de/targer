@@ -1,7 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-frontend-config-map
+  name: {{ $.Release.Name }}-frontend-config-map
+  {{- with $.Values.namespace }}
+  namespace: {{ . }}
+  {{- end }}
 data:
   config.ini: |
     [frontend]

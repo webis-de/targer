@@ -2,11 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+namespace: services-targer
+
 frontend:
 #  url: https://demo.webis.de/targer/
   port: 30294
   image: webis/targer-frontend:1.0.0
   replicas: 3
+  servicePort: 6001 # Internal service port, not exposed outside Kubernetes.
 
 backend:
   url: https://demo.webis.de/targer-api/
@@ -16,6 +19,7 @@ backend:
   replicas: 3
   # Paths of models on each host's file system.
   modelsPath: /mnt/ceph/storage/data-in-production/data-research/acqua/targer/models/
+  servicePort: 6000 # Internal service port, not exposed outside Kubernetes.
 
 elasticsearch:
 #  host: elasticsearch.bw.webis.de

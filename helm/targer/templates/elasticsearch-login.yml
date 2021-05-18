@@ -1,10 +1,13 @@
-{{ if and .Values.elasticsearch.username .Values.elasticsearch.password }}
+{{- if and $.Values.elasticsearch.username $.Values.elasticsearch.password -}}
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Release.Name }}-elasticsearch-login
+  name: {{ $.Release.Name }}-elasticsearch-login
+  {{- with $.Values.namespace }}
+  namespace: {{ . }}
+  {{- end }}
 type: Opaque
 data:
-  username: {{ b64enc .Values.elasticsearch.username }}
-  password: {{ b64enc .Values.elasticsearch.password }}
-{{ end }}
+  username: {{ b64enc $.Values.elasticsearch.username }}
+  password: {{ b64enc $.Values.elasticsearch.password }}
+{{- end -}}

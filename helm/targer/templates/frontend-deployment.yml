@@ -1,37 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: {{ $.Release.Name }}-frontend
+  {{- with $.Values.namespace }}
+  namespace: {{ . }}
+  {{- end }}
   labels:
-    service: {{ .Release.Name }}-frontend
-  name: {{ .Release.Name }}-frontend
+    service: {{ $.Release.Name }}-frontend
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-frontend
-  replicas: {{ .Values.frontend.replicas }}
+      app: {{ $.Release.Name }}-frontend
+  replicas: {{ $.Values.frontend.replicas }}
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-frontend
+        app: {{ $.Release.Name }}-frontend
     spec:
       containers:
-      - name: {{ .Release.Name }}-frontend
-        image: {{ .Values.frontend.image }}
-        {{ if and .Values.elasticsearch.username .Values.elasticsearch.password }}
+      - name: {{ $.Release.Name }}-frontend
+        image: {{ $.Values.frontend.image }}
+        {{ if and $.Values.elasticsearch.username $.Values.elasticsearch.password }}
         env:
           - name: ES_USERNAME
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-elasticsearch-login
+                name: {{ $.Release.Name }}-elasticsearch-login
                 key: username
           - name: ES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-elasticsearch-login
+                name: {{ $.Release.Name }}-elasticsearch-login
                 key: password
         {{ end }}
         volumeMounts:
-        - name: {{ .Release.Name }}-frontend-config
+        - name: {{ $.Release.Name }}-frontend-config
           mountPath: /config.ini
           subPath: config.ini
         startupProbe:
@@ -48,6 +51,6 @@ spec:
           failureThreshold: 3
       restartPolicy: Always
       volumes:
-      - name: {{ .Release.Name }}-frontend-config
+      - name: {{ $.Release.Name }}-frontend-config
         configMap:
-          name: {{ .Release.Name }}-frontend-config-map
+          name: {{ $.Release.Name }}-frontend-config-map
