@@ -19,13 +19,18 @@ If you use the demo or would like to refer to it, please cite the paper mentione
 You can use the following BibTeX information for citation: 
 
 ```bibtex
-@inproceedings{chernodub2019targer,
-  title     = {TARGER: Neural Argument Mining at Your Fingertips},
-  author    = {Chernodub, Artem and Oliynyk, Oleksiy and Heidenreich, Philipp and Bondarenko, Alexander and 
-               Hagen, Matthias and Biemann, Chris  and Panchenko, Alexander},
-  booktitle = {Proceedings of the 57th Annual Meeting of the Association of Computational Linguistics (ACL'2019)},
-  year      = {2019},
-  address   = {Florence, Italy}
+@InProceedings{chernodub:2019,
+  author =                {Artem Chernodub and Oleksiy Oliynyk and Philipp Heidenreich and Alexander Bondarenko and Matthias Hagen and Chris Biemann and Alexander Panchenko},
+  booktitle =             {57th Annual Meeting of the Association for Computational Linguistics (ACL 2019)},
+  editor =                {{Martha R.} {Costa-juss{\`a}} and Enrique Alfonseca},
+  ids =                   {bondarenko:2019b},
+  month =                 jul,
+  pages =                 {195-200},
+  publisher =             {Association for Computational Linguistics},
+  site =                  {Florence, Italy},
+  title =                 {{TARGER: Neural Argument Mining at Your Fingertips}},
+  url =                   {https://www.aclweb.org/anthology/P19-3031},
+  year =                  2019
 }
 ```
 
