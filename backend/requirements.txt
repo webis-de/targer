@@ -1,6 +1,6 @@
-flask==1.0.4
-flasgger==0.9.4
-flask_restful==0.3.7
-torch==0.4.1
-torchvision==0.2.1
-PyYAML
+flask~=1.0
+flasgger~=0.9.4
+flask_restful~=0.3.7
+torch~=0.4.1
+torchvision~=0.2.1
+pyyaml~6.0
