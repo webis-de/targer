@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.5
+FROM python:3.7
 
 # Clone third-party repos.
 RUN git clone --depth 1 https://github.com/UKPLab/emnlp2017-bilstm-cnn-crf.git /emnlp2017-bilstm-cnn-crf
