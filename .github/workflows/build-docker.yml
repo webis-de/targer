@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - name: "📥 Check-out"
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: "🚀 Build Docker image"
       uses: docker/build-push-action@v1
       with:
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - name: "📥 Check-out"
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: "🚀 Build Docker image"
       uses: docker/build-push-action@v1
       with:
