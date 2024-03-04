@@ -3,4 +3,4 @@ flasgger~=0.9.7
 flask_restful~=0.3.10
 elasticsearch~=7.0
 spacy~=2.2
-requests~=2.25
+requests~=2.31
