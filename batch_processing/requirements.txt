@@ -1,4 +1,4 @@
 multiprocessing~=2.6
 time~=1.0
-elasticsearch~=7.0
+elasticsearch7~=7.0
 argparse~=1.4
