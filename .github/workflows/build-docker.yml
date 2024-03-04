@@ -10,7 +10,7 @@ jobs:
     - name: "📥 Check-out"
       uses: actions/checkout@v2
     - name: "🚀 Build Docker image"
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v5
       with:
         path: frontend
         push: false
@@ -21,7 +21,7 @@ jobs:
     - name: "📥 Check-out"
       uses: actions/checkout@v2
     - name: "🚀 Build Docker image"
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v5
       with:
         path: backend
         push: false
