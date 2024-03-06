@@ -1,4 +1,4 @@
-[![GitHub Actions](https://img.shields.io/github/workflow/status/webis-de/targer/Docker%20build?style=flat-square)](https://github.com/webis-de/targer/actions?query=workflow%3A%22Docker+build%22)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/webis-de/targer/ci.yml?branch=main&style=flat-square)](https://github.com/webis-de/targer/actions/workflows/ci.yml)
 [![Docker Hub frontend tags](https://img.shields.io/docker/v/webis/targer-frontend?style=flat-square&label=frontend+version)](https://hub.docker.com/repository/docker/webis/targer-frontend/tags)
 [![Docker Hub frontend](https://img.shields.io/docker/pulls/webis/targer-frontend?style=flat-square&label=frontend+pulls)](https://hub.docker.com/repository/docker/webis/targer-frontend)
 [![Docker Hub backend tags](https://img.shields.io/docker/v/webis/targer-backend?style=flat-square&label=backend+version)](https://hub.docker.com/repository/docker/webis/targer-backend/tags)
