@@ -1,4 +1,4 @@
-flask~=1.0
+flask~=3.0
 flasgger~=0.9.7
 flask_restful~=0.3.10
 torch~=1.0
